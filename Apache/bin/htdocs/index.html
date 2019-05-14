@@ -1,0 +1,37 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<title>
+CGI-Test Nr.1
+</title>
+</head>
+
+<body>
+
+<h1>CGI Test Nr. 1</h1>
+
+Eingabe: <input type=text id="default"></input><br>
+<button type="button" onclick="run()" >Click me</button>
+
+
+ <script>
+	$(document).ready(function(){
+	
+	});
+	function run(){
+	console.log("clicked");
+		$.ajax({
+		type: "GET",
+		url: "localhost/cgi-bin/Apache.exeasdasds",
+		//data: {"TEST":"Testing"},
+		success: function(data){console.log(data)},
+		error:function(data){console.log(data)}
+		});
+	}
+	function res(a){
+		console.log(a);
+	}
+ </script>
+</body>
+</html>
+
