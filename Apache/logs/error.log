@@ -1,0 +1,26 @@
+[Thu May 06 08:16:36 2010] [error] [client 127.0.0.1] File does not exist: c:/temp/apache group/apache/htdocs/favicon.ico
+[Thu May 06 08:16:39 2010] [error] [client 127.0.0.1] File does not exist: c:/temp/apache group/apache/htdocs/favicon.ico
+[Mon Jun 24 10:48:59 2013] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache group/apache/cgi-bin/start.cgi
+[Mon Jun 24 10:48:59 2013] [error] [client 127.0.0.1] File does not exist: c:/temp/apache group/apache/htdocs/favicon.ico
+[Mon Jun 24 10:48:59 2013] [error] [client 127.0.0.1] File does not exist: c:/temp/apache group/apache/htdocs/favicon.ico
+[Mon Jun 24 10:52:58 2013] [error] [client 127.0.0.1] File does not exist: c:/temp/apache group/apache/htdocs/favicon.ico
+[Mon Jun 24 10:52:58 2013] [error] [client 127.0.0.1] File does not exist: c:/temp/apache group/apache/htdocs/favicon.ico
+[Thu Mar 02 14:09:13 2017] [error] [client 127.0.0.1] File does not exist: c:/temp/apache/htdocs/favicon.ico
+[Thu Mar 02 14:09:19 2017] [error] [client 127.0.0.1] File does not exist: c:/temp/apache/htdocs/favicon.ico
+[Thu Mar 02 14:11:04 2017] [error] [client 127.0.0.1] couldn't spawn child process: c:/temp/apache/cgi-bin/cgi-test-1.exe
+[Thu Mar 02 14:11:39 2017] [error] [client 127.0.0.1] (2)No such file or directory: couldn't spawn child process: c:/temp/apache/cgi-bin/cgi-test-1.exe
+[Thu Mar 02 14:12:12 2017] [error] [client 127.0.0.1] File does not exist: c:/temp/apache/htdocs/favicon.ico
+[Thu Mar 02 14:12:12 2017] [error] [client 127.0.0.1] File does not exist: c:/temp/apache/htdocs/favicon.ico
+[Thu Mar 02 14:12:16 2017] [error] [client 127.0.0.1] couldn't spawn child process: c:/temp/apache/cgi-bin/cgi-test-1.exe
+[Thu Mar 02 14:15:24 2017] [error] [client 127.0.0.1] (2)No such file or directory: couldn't spawn child process: c:/temp/apache/cgi-bin/cgi-test-1.exe
+[Thu Mar 02 14:15:56 2017] [error] [client 127.0.0.1] (2)No such file or directory: couldn't spawn child process: c:/temp/apache/cgi-bin/cgi-test-2.exe
+[Thu Mar 02 14:16:00 2017] [error] [client 127.0.0.1] (2)No such file or directory: couldn't spawn child process: c:/temp/apache/cgi-bin/cgi-test-2.exe
+[Thu Mar 02 14:16:18 2017] [error] [client 127.0.0.1] (2)No such file or directory: couldn't spawn child process: c:/temp/apache/cgi-bin/cgi
+[Thu Mar 02 14:16:24 2017] [error] [client 127.0.0.1] (2)No such file or directory: couldn't spawn child process: c:/temp/apache/cgi-bin/cgi
+[Thu Mar 02 14:17:04 2017] [error] [client 127.0.0.1] (2)No such file or directory: couldn't spawn child process: c:/temp/apache/cgi-bin/cgi.cgi
+[Thu Mar 02 14:25:10 2017] [error] [client 127.0.0.1] (2)No such file or directory: script not found or unable to stat: c:/temp/apache/cgi-bin/cgi-test-1.exe
+[Tue May 14 19:03:29 2019] [crit] make_sock: could not bind to port 80
+[Tue May 14 19:03:31 2019] [crit] make_sock: could not bind to port 80
+[Tue May 14 19:03:36 2019] [crit] make_sock: could not bind to port 80
+[Tue May 14 19:03:37 2019] [crit] make_sock: could not bind to port 80
+[Tue May 14 19:05:50 2019] [crit] make_sock: could not bind to port 80

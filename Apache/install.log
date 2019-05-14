@@ -1,0 +1,35 @@
+01/14/10 11:50:04 STARTED 1.003 Aug 16 1999 14:49:29
+01/14/10 11:50:04 src=C:\Dokumente und Einstellungen\Hardy\Lokale Einstellungen\Temp\pft68~tmp\ support=C:\DOKUME~1\Hardy\LOKALE~1\Temp\_ISTMP1.DIR\_ISTMP0.DIR\ inst=C:\Temp\Apache Group\Apache
+01/14/10 11:50:04 FillInReplaceTable tmpl=@@ServerRoot@@ value=C:/Temp/Apache Group/Apache
+01/14/10 11:50:04 command=0 1in=.tmp\mime.types out=conf\mime.types.default options=5
+01/14/10 11:50:04 COPY: expanded C:\Temp\Apache Group\Apache\.tmp\mime.types to C:\Temp\Apache Group\Apache\conf\mime.types.default
+01/14/10 11:50:04 COPY: deleted file C:\Temp\Apache Group\Apache\.tmp\mime.types
+01/14/10 11:50:04 command=0 1in=.tmp\magic out=conf\magic.default options=5
+01/14/10 11:50:04 COPY: expanded C:\Temp\Apache Group\Apache\.tmp\magic to C:\Temp\Apache Group\Apache\conf\magic.default
+01/14/10 11:50:04 COPY: deleted file C:\Temp\Apache Group\Apache\.tmp\magic
+01/14/10 11:50:04 command=0 1in=.tmp\httpd.conf-dist-win out=conf\httpd.conf.default options=7
+01/14/10 11:50:04 COPY: expanded C:\Temp\Apache Group\Apache\.tmp\httpd.conf-dist-win to C:\Temp\Apache Group\Apache\conf\httpd.conf.default
+01/14/10 11:50:04 COPY: deleted file C:\Temp\Apache Group\Apache\.tmp\httpd.conf-dist-win
+01/14/10 11:50:04 command=0 1in=.tmp\srm.conf-dist-win out=conf\srm.conf.default options=7
+01/14/10 11:50:04 COPY: expanded C:\Temp\Apache Group\Apache\.tmp\srm.conf-dist-win to C:\Temp\Apache Group\Apache\conf\srm.conf.default
+01/14/10 11:50:04 COPY: deleted file C:\Temp\Apache Group\Apache\.tmp\srm.conf-dist-win
+01/14/10 11:50:04 command=0 1in=.tmp\access.conf-dist-win out=conf\access.conf.default options=7
+01/14/10 11:50:04 COPY: expanded C:\Temp\Apache Group\Apache\.tmp\access.conf-dist-win to C:\Temp\Apache Group\Apache\conf\access.conf.default
+01/14/10 11:50:04 COPY: deleted file C:\Temp\Apache Group\Apache\.tmp\access.conf-dist-win
+01/14/10 11:50:04 command=0 1in=conf\httpd.conf.default out=conf\httpd.conf options=0
+01/14/10 11:50:04 COPY: expanded C:\Temp\Apache Group\Apache\conf\httpd.conf.default to C:\Temp\Apache Group\Apache\conf\httpd.conf
+01/14/10 11:50:04 command=0 1in=conf\srm.conf.default out=conf\srm.conf options=0
+01/14/10 11:50:04 COPY: expanded C:\Temp\Apache Group\Apache\conf\srm.conf.default to C:\Temp\Apache Group\Apache\conf\srm.conf
+01/14/10 11:50:04 command=0 1in=conf\access.conf.default out=conf\access.conf options=0
+01/14/10 11:50:04 COPY: expanded C:\Temp\Apache Group\Apache\conf\access.conf.default to C:\Temp\Apache Group\Apache\conf\access.conf
+01/14/10 11:50:04 command=0 1in=conf\magic.default out=conf\magic options=0
+01/14/10 11:50:04 COPY: expanded C:\Temp\Apache Group\Apache\conf\magic.default to C:\Temp\Apache Group\Apache\conf\magic
+01/14/10 11:50:04 command=0 1in=conf\mime.types.default out=conf\mime.types options=0
+01/14/10 11:50:04 COPY: expanded C:\Temp\Apache Group\Apache\conf\mime.types.default to C:\Temp\Apache Group\Apache\conf\mime.types
+01/14/10 11:50:04 command=0 1in=.tmp\highperformance.conf-dist out=conf\highperformance.conf-dist options=7
+01/14/10 11:50:04 COPY: expanded C:\Temp\Apache Group\Apache\.tmp\highperformance.conf-dist to C:\Temp\Apache Group\Apache\conf\highperformance.conf-dist
+01/14/10 11:50:04 COPY: deleted file C:\Temp\Apache Group\Apache\.tmp\highperformance.conf-dist
+01/14/10 11:50:04 command=1 1in=.tmp out=NULL options=0
+01/14/10 11:50:04 RMDIR: deleted directory C:\Temp\Apache Group\Apache\.tmp
+01/14/10 11:50:04 command=3 1in=NULL out=NULL options=0
+01/14/10 11:50:04 FINISHED OK

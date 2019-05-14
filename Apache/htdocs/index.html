@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http - equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <!-- <form action="http://localhost/cgi-bin/Test.exe" method="post"> -->
+    <input type="text" name="Username" id="UsernameEnter"><br>
+    <input type="password" name="Password" id="PasswordEnter"><br>
+    <button id="Submit" onclick="AjaxRun()"> Schick ab bitch</button>
+    <!-- </form> -->
+
+    <script>
+        // $(Document).ready({
+        // function() {
+        function AjaxRun() {
+            $.ajax({
+                url: "http://localhost/cgi-bin/Test.exe",
+                method: "Post",
+                data: {
+                    "Username": $("#UsernameEnter").val(),
+                    "Password": $("#PasswordEnter").val()
+                },
+                success: function(data) {
+                    console.log(data);
+                },
+                fail: function(data) {
+                    console.log(data)
+                }
+            });
+        }
+        //     }
+        // });
+    </script>
+</body>
+
+</html>
