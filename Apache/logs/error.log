@@ -24,3 +24,5 @@
 [Tue May 14 19:03:36 2019] [crit] make_sock: could not bind to port 80
 [Tue May 14 19:03:37 2019] [crit] make_sock: could not bind to port 80
 [Tue May 14 19:05:50 2019] [crit] make_sock: could not bind to port 80
+[Wed May 15 19:21:07 2019] [error] [client 127.0.0.1] File does not exist: c:/temp/apache/htdocs/favicon.ico
+[Sat May 18 16:58:37 2019] [error] [client 127.0.0.1] File does not exist: c:/temp/apache/htdocs/favicon.ico
