@@ -93,12 +93,13 @@ int RowsInFile(FILE *f, int ResetToPosition, int SizeofData)
 int getUser(char Username[41], char Password[41])
 {
     FILE *f;
+    int returnValue;
     f = fopen("c:/temp/apache/cgi-bin/User.txt", "r");
     if (f == NULL)
     {
-        cout << "[SERVER]: getUserFAILED" << endl;
+        cout << "[SERVER]: Konnte die User.txt nicht öffnen." << endl;
         fclose(f);
-        return -1;
+        returnValue = -1;
     }
     else
     {
@@ -107,21 +108,35 @@ int getUser(char Username[41], char Password[41])
         if (User.Username[0]!='\0'){
             if(strcmp(User.Password, Password) == 0){
                 cout << "[SERVER]: Password stimmt überein"<<endl;
+                cout << "[SERVER]: Token ist: " << User.token << endl<< endl;
+                returnValue = 2;
             } else {
                 cout << "[SERVER]: Password nicht correct, ------- hier ist noch WIP ------- "<<endl;
+                returnValue = 1;
             }
-            return 1;
+
         }
         else {
             cout << "[SERVER]: User nicht vorhanden" << endl;
-            return -1;
+            return 0;
         }
     }
 }
 
+char * TokenGen( int size ){
+    char AllChars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_";
+    char * ret = new char[size+1];
+    for (int i = 0; i < size; i++){
+        ret[i] = AllChars[rand() % (sizeof(AllChars) - 1)];
+    }
+    ret[size] = '\0';
+
+    return ret;
+}
+
 int makeUser(char Username[41], char Password[41]){
     FILE *f;
-    if(getUser(Username, Password)<0){
+    if(getUser(Username, Password)==0){
         f = fopen("c:/temp/apache/cgi-bin/User.txt", "a+");
         if(f==NULL){
             cout << "[SERVER]: FILE Error, at" << endl << "-------  makeUser -------" << endl;
@@ -131,6 +146,7 @@ int makeUser(char Username[41], char Password[41]){
             Userdaten * User = new Userdaten;
             strcpy(User->Username,Username);
             strcpy(User->Password,Password);
+            strcpy(User->token, TokenGen(200));
             fwrite(User,sizeof(Userdaten),1,f);
             cout << "[Server]: User " << Username <<" created" << endl;
         }
@@ -149,8 +165,9 @@ int main()
     char SearchforValue[100];
     strcpy(SearchforValue, "Username=");
     int Pos = ValuePosition(c, SearchforValue);
-    char *Username = new char[41];
-    char *Password = new char[41];
+    char * Username = new char[41];
+    char * Password = new char[41];
+    char * Befehl = new char[41];
     if (Pos >= 0)
     {
 
@@ -162,13 +179,35 @@ int main()
     Pos = ValuePosition(c, SearchforValue);
     if (Pos >= 0)
     {
-
         GetValue(Password, Pos, c, 41);
         cout << "[SERVER]: Password ist: '" << Password << "'" << endl;
-        
+    }
+
+    /**** Wichtig ****
+     * 
+     * Es gibt noch keine Errorabfragen, steht alles auf der ToDo Liste.
+     * Mich aber dennoch gerne dran erinnnern.
+     * 
+     * 
+     */
+    strcpy(SearchforValue, "Befehl=");
+    Pos = ValuePosition(c, SearchforValue);
+    if (Pos >= 0){
+        GetValue(Befehl, Pos, c, 41);
+        cout << "[SERVER]: Befehl ist: '" << Befehl << "'" << endl;
+        if (strcmp(Befehl,"CreateUser") == 0){
+            makeUser(Username,Password);
+        } else if (strcmp(Befehl,"GetToken") == 0){
+            getUser(Username, Password);
+        }
+        else
+        {
+            cout << "[SERVER]: Konnte leider mit dem Befehl nichts anfangen, bisher gibt es nur 'CreateUser' und 'GetToken'" << endl;
+        }
+    } else {
+        cout << "[SERVER]: Habe leider keinen richtigen Befehl erhalten";
     }
     
-    makeUser(Username,Password);
     cout << endl << "[SERVER]: Done" << endl << endl;
     return 0;
 }

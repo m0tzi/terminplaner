@@ -27,7 +27,8 @@
                 method: "Post",
                 data: {
                     "Username": $("#UsernameEnter").val(),
-                    "Password": $("#PasswordEnter").val()
+                    "Password": $("#PasswordEnter").val(),
+                    "Befehl": "CreateUser"
                 },
                 success: function(data) {
                     console.log(data);
@@ -37,8 +38,6 @@
                 }
             });
         }
-        //     }
-        // });
     </script>
 </body>
 
