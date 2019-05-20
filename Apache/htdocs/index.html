@@ -16,6 +16,8 @@
     <input type="text" name="Username" id="UsernameEnter"><br>
     <input type="password" name="Password" id="PasswordEnter"><br>
     <button id="Submit" onclick="AjaxRun()"> Schick ab bitch</button>
+    
+    <!-- textbox id user_ausgabe-->
     <!-- </form> -->
 
     <script>
@@ -28,9 +30,14 @@
                 data: {
                     "Username": $("#UsernameEnter").val(),
                     "Password": $("#PasswordEnter").val()
+                    //datum -> ethsethsht
                 },
                 success: function(data) {
                     console.log(data);
+   
+                    //var david = json.parse(data);
+                    // david.termin[0] -> user_ausgabe();
+                    // david.termin[1] -> user_ausgabe2();
                 },
                 fail: function(data) {
                     console.log(data)
