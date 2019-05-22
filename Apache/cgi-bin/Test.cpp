@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
+// #include "C:\temp\Apache\cgi-bin\header.h"
 
 using namespace std;
 
@@ -94,11 +96,18 @@ int getUser(char Username[41], char Password[41])
 {
     FILE *f;
     int returnValue;
-    f = fopen("c:/temp/apache/cgi-bin/User.txt", "r");
+    f = fopen("c:/temp/apache/cgi-bin/User.txt", "r+"); // W weil die txt evtl erst erstellt werden muss
+
     if (f == NULL)
     {
-        cout << "[SERVER]: Konnte die User.txt nicht öffnen." << endl;
-        fclose(f);
+        f=fopen("c:/temp/apache/cgi-bin/User.txt", "w+");
+        if(f==NULL){
+            cout << "[SERVER]: User.txt nicht vorhanden, kann sie auch nicht erstellen" << endl;
+        }
+        else{
+            cout << "[SERVER]: User.txt noch nicht vorhanden, erstelle..." << endl;
+            fclose(f);
+        }
         returnValue = -1;
     }
     else
@@ -125,6 +134,7 @@ int getUser(char Username[41], char Password[41])
 
 char * TokenGen( int size ){
     char AllChars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_";
+    srand(time(NULL));
     char * ret = new char[size+1];
     for (int i = 0; i < size; i++){
         ret[i] = AllChars[rand() % (sizeof(AllChars) - 1)];
@@ -137,7 +147,7 @@ char * TokenGen( int size ){
 int makeUser(char Username[41], char Password[41]){
     FILE *f;
     if(getUser(Username, Password)==0){
-        f = fopen("c:/temp/apache/cgi-bin/User.txt", "a+");
+        f = fopen("c:/temp/apache/cgi-bin/User.txt", "a");
         if(f==NULL){
             cout << "[SERVER]: FILE Error, at" << endl << "-------  makeUser -------" << endl;
             return 0;
@@ -148,9 +158,24 @@ int makeUser(char Username[41], char Password[41]){
             strcpy(User->Password,Password);
             strcpy(User->token, TokenGen(200));
             fwrite(User,sizeof(Userdaten),1,f);
+            fclose(f);
+            char txtName[205 + 32] = "C:/temp/apache/cgi-bin/Userdaten/";
+            strcat(txtName,User->token);
+            strcat(txtName,".txt");
+
+            f = fopen(txtName, "w+");
+            if(f==NULL){
+                cout << "[SERVER]: File Error, at" << endl << "------ makeUser ------" <<endl << txtName<< endl;
+                return 0;
+            }
+            fwrite("", 0, 0, f);
+
+            fclose(f);
             cout << "[Server]: User " << Username <<" created" << endl;
+
         }
     }
+    fclose(f);
     return 0;
 }
 

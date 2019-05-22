@@ -30,3 +30,4 @@
 [Mon May 20 20:35:16 2019] [error] [client 127.0.0.1] (2)No such file or directory: script not found or unable to stat: c:/temp/apache/cgi-bin/test.exe
 [Mon May 20 20:35:19 2019] [error] [client 127.0.0.1] (2)No such file or directory: script not found or unable to stat: c:/temp/apache/cgi-bin/test.exe
 [Mon May 20 20:35:20 2019] [error] [client 127.0.0.1] (2)No such file or directory: script not found or unable to stat: c:/temp/apache/cgi-bin/test.exe
+[Tue May 21 20:45:50 2019] [error] [client 127.0.0.1] File does not exist: c:/temp/apache/htdocs/favicon.ico
