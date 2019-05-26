@@ -31,3 +31,23 @@
 [Mon May 20 20:35:19 2019] [error] [client 127.0.0.1] (2)No such file or directory: script not found or unable to stat: c:/temp/apache/cgi-bin/test.exe
 [Mon May 20 20:35:20 2019] [error] [client 127.0.0.1] (2)No such file or directory: script not found or unable to stat: c:/temp/apache/cgi-bin/test.exe
 [Tue May 21 20:45:50 2019] [error] [client 127.0.0.1] File does not exist: c:/temp/apache/htdocs/favicon.ico
+[Sat May 25 15:45:35 2019] [error] [client 127.0.0.1] File does not exist: c:/temp/apache/htdocs/favicon.ico
+[Sat May 25 20:06:16 2019] [error] [client 127.0.0.1] File does not exist: c:/temp/apache/htdocs/favicon.ico
+[Sat May 25 22:56:47 2019] [error] [client 127.0.0.1] File does not exist: c:/temp/apache/htdocs/favicon.ico
+[Sun May 26 09:16:03 2019] [error] [client 127.0.0.1] File does not exist: c:/temp/apache/htdocs/favicon.ico
+[Sun May 26 10:03:10 2019] [error] [client 127.0.0.1] malformed header from script. Bad header=User does not exist: c:/temp/apache/cgi-bin/test.exe
+[Sun May 26 10:04:28 2019] [error] [client 127.0.0.1] malformed header from script. Bad header=User does not exist: c:/temp/apache/cgi-bin/test.exe
+[Sun May 26 10:12:10 2019] [error] [client 127.0.0.1] malformed header from script. Bad header=Could not access user file: c:/temp/apache/cgi-bin/test.exe
+[Sun May 26 10:13:02 2019] [error] [client 127.0.0.1] malformed header from script. Bad header=Could not create user specific: c:/temp/apache/cgi-bin/test.exe
+[Sun May 26 10:13:10 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun May 26 10:15:34 2019] [error] [client 127.0.0.1] malformed header from script. Bad header=Could not create user specific: c:/temp/apache/cgi-bin/test.exe
+[Sun May 26 10:21:03 2019] [error] [client 127.0.0.1] malformed header from script. Bad header=Password is incorrect}: c:/temp/apache/cgi-bin/test.exe
+[Sun May 26 10:21:26 2019] [error] [client 127.0.0.1] malformed header from script. Bad header=Could not use the User.txt: c:/temp/apache/cgi-bin/test.exe
+[Sun May 26 10:21:38 2019] [error] [client 127.0.0.1] malformed header from script. Bad header=Could not access user file: c:/temp/apache/cgi-bin/test.exe
+[Sun May 26 10:22:54 2019] [error] [client 127.0.0.1] malformed header from script. Bad header=Could not use the User.txt: c:/temp/apache/cgi-bin/test.exe
+[Sun May 26 10:23:20 2019] [error] [client 127.0.0.1] malformed header from script. Bad header=Could not use the User.txt: c:/temp/apache/cgi-bin/test.exe
+[Sun May 26 10:45:24 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun May 26 10:51:15 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun May 26 10:52:17 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun May 26 10:52:58 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun May 26 11:13:40 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe

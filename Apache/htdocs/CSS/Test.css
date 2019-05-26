@@ -1,0 +1,178 @@
+@-webkit-keyframes FadeIn {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  70% {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes FadeIn {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  70% {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+body {
+  background-color: #1b2431;
+  width: 100vw;
+  height: 100vh;
+}
+
+.body {
+  font: 14px fantasy;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 45% 45%;
+      grid-template-columns: 45% 45%;
+  -ms-grid-rows: 50vh auto;
+      grid-template-rows: 50vh auto;
+      grid-template-areas: "User Date" "Token Token";
+  grid-gap: 10% 10%;
+  justify-items: stretch;
+  width: 80%;
+  min-width: 800px;
+  margin-top: 10%;
+  margin-left: 10%;
+}
+
+.body div.container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 25% max-content max-content max-content;
+      grid-template-rows: 25% -webkit-max-content -webkit-max-content -webkit-max-content;
+      grid-template-rows: 25% max-content max-content max-content;
+  -ms-grid-columns: 25% 50% 25%;
+      grid-template-columns: 25% 50% 25%;
+  grid-gap: 5% 0%;
+      grid-template-areas: ". . ." ". Eingabe ." ". Buttons ." ". Ausgabe .";
+}
+
+.body .TokenContainer {
+  display: none;
+  opacity: 0%;
+  -webkit-transition: all 2s;
+  transition: all 2s;
+}
+
+.body .TokenContainer textarea {
+  width: calc(100% - 6px);
+  height: 100%;
+}
+
+.body .showMe {
+  display: block !important;
+  opacity: 100% !important;
+  -webkit-animation: FadeIn 2s ease-out normal backwards;
+          animation: FadeIn 2s ease-out normal backwards;
+}
+
+.body div.TokenContainer,
+.body div.container {
+  background: #ff6e48;
+  -webkit-box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+          box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  -webkit-transition: all 250ms;
+  transition: all 250ms;
+}
+
+.body .input {
+  -ms-grid-row: 2;
+  -ms-grid-column: 2;
+  grid-area: Eingabe;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 30% 65%;
+      grid-template-columns: 30% 65%;
+  -ms-grid-rows: auto;
+      grid-template-rows: auto;
+      grid-template-areas: "label text";
+  grid-gap: 0% 5%;
+}
+
+.body .labels {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  grid-area: label;
+}
+
+.body .inputs {
+  -ms-grid-row: 1;
+  -ms-grid-column: 2;
+  grid-area: text;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.body .button {
+  -ms-grid-row: 3;
+  -ms-grid-column: 2;
+  grid-area: Buttons;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  word-wrap: normal;
+}
+
+.body .button button {
+  min-height: 3rem;
+  width: 100%;
+}
+
+.body .container:hover {
+  z-index: 2;
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+}
+
+.body .UserData {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  grid-area: User;
+}
+
+.body .DateData {
+  -ms-grid-row: 1;
+  -ms-grid-column: 2;
+  grid-area: Date;
+}
+
+.body .Serverantwort {
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  grid-area: Token;
+}
+/*# sourceMappingURL=Test.css.map */
