@@ -3,50 +3,129 @@
 
 <head>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
+    <link rel="stylesheet" type="text/css" href="CSS/Test.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http - equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 
-</head>
-
-<body>
-    <!-- <form action="http://localhost/cgi-bin/Test.exe" method="post"> -->
-    <input type="text" name="Username" id="UsernameEnter"><br>
-    <input type="password" name="Password" id="PasswordEnter"><br>
-    <button id="Submit" onclick="AjaxRun()"> Schick ab bitch</button>
-    
-    <!-- textbox id user_ausgabe-->
-    <!-- </form> -->
-
     <script>
+        var Endpoint = "http://localhost/cgi-bin/Test.exe";
         // $(Document).ready({
         // function() {
-        function AjaxRun() {
-            $.ajax({
-                url: "http://localhost/cgi-bin/Test.exe",
-                method: "Post",
-                data: {
-                    "Username": $("#UsernameEnter").val(),
-                    "Password": $("#PasswordEnter").val()
-                    //datum -> ethsethsht
-                },
-                success: function(data) {
-                    console.log(data);
-   
-                    //var david = json.parse(data);
-                    // david.termin[0] -> user_ausgabe();
-                    // david.termin[1] -> user_ausgabe2();
-                },
-                fail: function(data) {
-                    console.log(data)
-                }
-            });
+        function CreateUser() {
+            var parameter = {
+                "Username": $("#UsernameEnter").val(),
+                "Password": $("#PasswordEnter").val(),
+                "Befehl": "CreateUser"
+            }
+            CallServer(parameter);
         }
+
+        function GetToken() {
+            var parameter = {
+                "Username": $("#UsernameEnter").val(),
+                "Password": $("#PasswordEnter").val(),
+                "Befehl": "GetToken"
+            }
+            CallServer(parameter);
+        }
+
+        function CreateDate() {
+            var parameter = {
+                "Token": $("#TokenEnter").val(),
+                "Desc": $("#Desc").val(),
+                "Time": $("#Time").val(),
+                "DateName": $("#DateName").val(),
+                "Befehl": "CreateDate"
+            }
+            CallServer(parameter);
+        }
+
+        function GetDates() {
+            var parameter = {
+                "Token": $("#TokenEnter").val(),
+                "Befehl": "GetDates"
+            }
+            CallServer(parameter);
+        }
+
+        function CallServer(parameter) {
+            $.ajax({
+                url: Endpoint,
+                method: "Post",
+                data: parameter
+            }).done(function(data) {
+                console.log("ERFOLG");
+                $("#OutputDiv").addClass("showMe");
+                $("#OutputTxt").text(data);
+                console.log(data);
+            }).fail(function(data) {
+                console.log("Misserfolg");
+                console.log(data);
+            })
+        }
+        // $.ajax({
+        //     url: "http://localhost/cgi-bin/Test.exe",
+        //     method: "Post",
+        //     data: {
+        //         "Username": $("#UsernameEnter").val(),
+        //         "Password": $("#PasswordEnter").val(),
+        //         "Token": "xryoQEIShakAKLmimlOgZvINXrwZGTTPfvBuwRDJVtVSq_lMRTfFDgrxFvxS_OJDzwALqkwdmJWXZslKLJLaNTFY_nlNCFGlEdKryvgiIMLJvMbwClXxoEIkbAqBqnLqZW-bMjBazzVLvZfhyDYLoa-bHePYvNNNt_BbIgKdBdfieaQQNYjTHqsBhEQhc_smJUWeQCcw",
+        //         "Befehl": "GetDates",
+        //         "Desc": "Hello this is just a test Kappa",
+        //         "Time": "unwichtig",
+        //         "DateName": "Erster_Test"
+        //     },
+        //     success: function(data) {
+        //         console.log(data);
+        //     },
+        //     fail: function(data) {
+        //         console.log(data)
         //     }
         // });
     </script>
+
+</head>
+
+<body>
+    <div class="body">
+        <div class="UserData container">
+            <div class="input">
+                <div class="labels">
+                    <span>Username<br>Passwort</span>
+                </div>
+                <div class="inputs">
+                    <input type="text" name="Username" id="UsernameEnter">
+                    <input type="password" name="Password" id="PasswordEnter">
+                </div>
+            </div>
+            <div class="button">
+                <button id="CreateUser" onclick="CreateUser()">Erstelle User</button>
+                <button id="GetToken" onclick="GetToken()">Token zum User</button>
+            </div>
+        </div>
+        <div class="DateData container">
+            <div class="input">
+                <div class="labels">
+                    <span>Token<br>Desc.<br>Time<br>DateName</span>
+                </div>
+                <div class="inputs">
+                    <input type="text" id="TokenEnter">
+                    <input type="text" id="Desc">
+                    <input type="text" id="Time">
+                    <input type="text" id="DateName">
+                </div>
+            </div>
+            <div class="button">
+                <button id="CreateDate" onclick="CreateDate()">Erstelle Termin</button>
+                <button id="GetDates" onclick="GetDates()">Termine zum User</button>
+            </div>
+        </div>
+        <div class="Serverantwort TokenContainer" id="OutputDiv">
+            <textarea id="OutputTxt" cols="30" rows="10" readonly></textarea>
+        </div>
+    </div>
 </body>
 
 </html>
