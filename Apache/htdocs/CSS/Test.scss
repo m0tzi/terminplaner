@@ -1,0 +1,114 @@
+$fonts: 14px fantasy;
+$grid-area: "User Date" "Token Token";
+$grid-token: Token;
+$grid-User: User;
+$grid-Date: Date;
+$div-background: #ff6e48;
+$Display: flex;
+$FlexWidth: 100%;
+$FlexJustifyContent: flex-start;
+$box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.12),
+0 1px 2px rgba(0, 0, 0, 0.24);
+@keyframes FadeIn {
+    0% {
+        transform: scale(0);
+    }
+    70% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+body {
+    background-color: #1b2431;
+    width: 100vw;
+    height: 100vh;
+}
+
+.body {
+    font: $fonts;
+    display: grid;
+    grid-template-columns: 45% 45%;
+    grid-template-rows: 50vh auto;
+    // grid-template-rows: max-content max-content;
+    grid-template-areas: $grid-area;
+    grid-gap: 10% 10%;
+    justify-items: stretch;
+    width: 80%;
+    min-width: 800px;
+    margin-top: 10%;
+    margin-left: 10%;
+    div.container {
+        display: grid;
+        grid-template-rows: 25% max-content max-content max-content;
+        grid-template-columns: 25% 50% 25%;
+        grid-gap: 5% 0%;
+        grid-template-areas: ". . ." ". Eingabe ." ". Buttons ." ". Ausgabe .";
+    }
+    .TokenContainer {
+        display: none;
+        opacity: 0%;
+        transition: all 2s;
+        textarea {
+            width: calc(100% - 6px);
+            height: 100%;
+        }
+    }
+    .showMe {
+        display: block !important;
+        opacity: 100% !important;
+        animation: FadeIn 2s ease-out normal backwards;
+    }
+    div.TokenContainer,
+    div.container {
+        background: $div-background;
+        box-shadow: $box-shadow;
+        transition: all 250ms;
+    }
+    .input {
+        grid-area: Eingabe;
+        display: grid;
+        grid-template-columns: 30% 65%;
+        grid-template-rows: auto;
+        grid-template-areas: "label text";
+        grid-gap: 0% 5%;
+    }
+    .labels {
+        grid-area: label;
+        line-height: 1.5;
+    }
+    .inputs {
+        grid-area: text;
+        display: $Display;
+        width: $FlexWidth;
+        justify-content: $FlexJustifyContent;
+        flex-direction: column;
+    }
+    .button {
+        grid-area: Buttons;
+        display: $Display;
+        width: $FlexWidth;
+        justify-content: $FlexJustifyContent;
+        flex-direction: row;
+        word-wrap: normal;
+        button {
+            min-height: 3rem;
+            width: 100%;
+        }
+    }
+    .container:hover {
+        z-index: 2;
+        transform: scale(1.1);
+    }
+    .UserData {
+        grid-area: $grid-User;
+    }
+    .DateData {
+        grid-area: $grid-Date;
+    }
+    .Serverantwort {
+        grid-area: $grid-token;
+    }
+}
