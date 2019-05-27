@@ -20,7 +20,6 @@ struct Date
     char DateDescription[401];
     char Time[51];
 };
-
 int ValuePosition(char c[1000], char SearchforString[100])
 {
     // char * values = malloc(1,sizeof(char));
@@ -65,7 +64,7 @@ void GetValue(char *Value, int pos, char c[1000], int Maxlength)
     Value[Valueindex] = '\0';
 }
 
-struct Userdaten getUserDataFromFile(FILE *f, char Username[41], char Password[41])
+struct Userdaten *getUserDataFromFile(FILE *f, char Username[41], char Password[41])
 {
     int size = sizeof(Userdaten);
     Userdaten *User = new Userdaten;
@@ -77,13 +76,10 @@ struct Userdaten getUserDataFromFile(FILE *f, char Username[41], char Password[4
         if (strcmp(User->Username, Username) == 0)
         {
             // cout << "[SERVER]: User " << Username <<" Existiert"<<endl;
-            return *User;
+            return User;
         }
     }
-    User->Username[0] = '\0';
-    User->Password[0] = '\0';
-    User->token[0] = '\0';
-    return *User;
+    return NULL;
 }
 
 int RowsInFile(FILE *f, int ResetToPosition, int SizeofData)
@@ -99,7 +95,7 @@ int RowsInFile(FILE *f, int ResetToPosition, int SizeofData)
     return MaxRow;
 }
 
-int getUser(char Username[41], char Password[41])
+int getUser(char Username[41], char Password[41], char* token)
 {
     FILE *f;
     int returnValue;
@@ -116,26 +112,19 @@ int getUser(char Username[41], char Password[41])
     }
     else
     {
-        struct Userdaten User = getUserDataFromFile(f, Username, Password);
+        Userdaten* User = getUserDataFromFile(f, Username, Password);
         fclose(f);
         // cout << User.Username[0] << endl;
-        if (User.Username[0] != '\0')
-        {
-            if (strcmp(User.Password, Password) == 0)
-            {
-                // cout << "[SERVER]: Password stimmt überein"<<endl;
-                // cout << "[SERVER]: Token ist: " << User.token << endl<< endl;
+        if(User!=NULL){
+            if(strcmp(Password,User->Username)){
+                strcpy(token, User->token);
                 return 2;
-            }
-            else
+            } else 
             {
-                // cout << "[SERVER]: Password nicht correct, ------- hier ist noch WIP ------- "<<endl;
                 return 1;
             }
         }
-        else
-        {
-            // cout << "[SERVER]: User nicht vorhanden" << endl;
+        else {
             return 0;
         }
     }
@@ -172,10 +161,10 @@ char *getDateTxt(char Datename[51])
     return txtName;
 }
 
-int makeUser(char Username[41], char Password[41])
+int makeUser(char Username[41], char Password[41], char *token)
 {
     FILE *f;
-    int User = getUser(Username, Password);
+    int User = getUser(Username, Password, token);
     if (User == 0)
     {
         f = fopen("c:/temp/apache/cgi-bin/User.txt", "a");
@@ -186,6 +175,7 @@ int makeUser(char Username[41], char Password[41])
         }
         else
         {
+            // HIER WIP, im Grunde kann ich auch beim getUser den struct zurückgeben und den return int als Pointer übergeben, ist aber bisher nicht so.
             Userdaten *User = new Userdaten;
             strcpy(User->Username, Username);
             strcpy(User->Password, Password);
@@ -199,7 +189,7 @@ int makeUser(char Username[41], char Password[41])
                 // cout << "[SERVER]: File Error, at" << endl << "------ makeUser ------" <<endl << User->Username<< endl;
                 return -2;
             }
-            fwrite("", 0, 0, f);
+            strcpy(token, User->token);
 
             fclose(f);
             // cout << "[Server]: User " << Username <<" created" << endl;
@@ -220,8 +210,8 @@ int makeUser(char Username[41], char Password[41])
 int makeDate(char token[201], Date *termin)
 {
 
-    char *test = getUserTxt(token);
-    FILE *f = fopen(test, "a");
+    char *txt = getUserTxt(token);
+    FILE *f = fopen(txt, "a");
     if (f == NULL)
     {
         // cout << "Failed, didn't find the User" << endl;
@@ -240,7 +230,7 @@ int makeDate(char token[201], Date *termin)
     fwrite(termin, sizeof(Date), 1, f);
     fclose(f);
     // cout << "Termin erstellt, mit den Daten : " << termin->DateDescription << endl;
-    return 1;
+    return 0;
 }
 int getDate(char Datename[51])
 {
@@ -272,16 +262,25 @@ int getDates(char token[201])
     }
 }
 
-void outPutStart(int StatusCode, char Desc[201])
+void outPutStart(int StatusCode, char *Desc) // int length | ist noch Temporär, vielleicht gar nicht nötig, da es keine Nullerkennung innerhalb des Strings geben sollte.
 {
-    // cout << "Content-Type: application/json\r\n";
-    // cout << "Status:" << StatusCode << "\r\n\r\n";
-    cout << "{ \"Desc\" : \"" << Desc << "\" }";
+    cout << "Content-Type: application/json\r\n";
+    cout << "Access-Control-Allow-Origin: http://192.168.0.192\r\n"; // WICHTIG, wenn man nicht über localhost geht.
+    cout << "Status:" << StatusCode << "\r\n\r\n";
+    cout << "{ \"Server\" : \"" << Desc << "\" }" ;
+
+    // for (int i = 0; i < lenght; i++){
+    //     cout << Desc[i];
+    // }
+    
+    
+    
+    // cout << "\" }";
 }
 
 int main()
 {
-    cout << "Content-Type: plain/text\r\n\r\n"; //DELETE
+    // cout << "Content-Type: plain/text\r\n\r\n"; //DELETE - hier nur wenn ich irgendwo cout einfüge zum Testen
     char c[1000];
     cin >> c;
     // cout << "[SERVER]: Erhaltene Daten: " << c << endl;
@@ -319,8 +318,8 @@ int main()
         GetValue(Befehl, Pos, c, 41);
         if (strcmp(Befehl, "CreateUser") == 0)
         {
-
-            switch (makeUser(Username, Password))
+            char *token = new char[201];
+            switch (makeUser(Username, Password, token))
             {
                 case -1:
                 {
@@ -337,15 +336,15 @@ int main()
                 }
                 case 0:
                 {
-                    char Error[] = "User created";
-                    outPutStart(201, Error);
+                    outPutStart(201, token);
                     break;
                 }
             }
         }
         else if (strcmp(Befehl, "GetToken") == 0)
         {
-            switch (getUser(Username, Password)){
+            char *token = new char[200];
+            switch (getUser(Username, Password, token)){
                 case -1:{
                     char Error[] = "Could not use the User.txt";
                     outPutStart(599,Error);
@@ -362,12 +361,7 @@ int main()
                     break;
                 }
                 case 2:{
-                    FILE * f = fopen("c:/temp/apache/cgi-bin/User.txt", "r+");
-                    if(f==NULL){
-                        return 0;
-                    }
-                    Userdaten User = getUserDataFromFile(f, Username, Password); //HIER WIP. Ich muss die ausgabe dynamischer machen
-                    outPutStart(200, User.token);
+                    outPutStart(200, token);
                 }
             }
         }
@@ -382,7 +376,7 @@ int main()
                 strcpy(SearchforValue, "Desc=");
                 char *Desc = new char[401];
                 Pos = ValuePosition(c, SearchforValue);
-                if (Pos >= 0)
+                if (Pos >= 0) // WICHTIG : Hier muss noch die abfrage rein, ob es den User wirklich gibt. wofür es noch keine Funktion gibt.
                 {
                     GetValue(Desc, Pos, c, 401);
                     strcpy(SearchforValue, "Time=");
@@ -403,25 +397,46 @@ int main()
                             // cout << "Termin überschrieben" << endl;
                             strcpy(Termin->DateDescription, Desc);
                             strcpy(Termin->Time, Time); // ICH KANN VON ANFANGAN DEN VERDAMMTEN STRUCT BENUTZEN, egal, später.
-                            makeDate(Token, Termin);
+                            switch(makeDate(Token, Termin)){
+                                case 0:{
+                                    char *Output = new char[22 + sizeof(Termin->Datename)];
+                                    strcpy(Output, "Termin ");
+                                    strcat(Output, Datename);
+                                    strcat(Output, " wurde erstellt");
+                                    outPutStart(201, Output);
+                                    break;
+                                }
+                                case -1:
+                                case -2:{
+                                    char Output[] = "File-Error";
+                                    outPutStart(599, Output);
+                                }
+                            }
                         }
                         else
                         {
-                            // cout << "Dateiname nicht nutzbar" << endl;
+                            char Output[] = "Dateiname nicht ok";
+                            outPutStart(499, Output);
                         }
                     }
                     else
                     {
+                        char Output[] = "Zeitangabe nicht ok";
+                        outPutStart(498, Output);
                         // cout << "Keine Zeitangaben gemacht" << endl;
                     }
                 }
                 else
                 {
+                    char Output[] = "Beschreibung kam im TS nicht an";
+                    outPutStart(497, Output);
                     // cout << "Keine Beschreibung gegeben" << endl;
                 }
             }
             else
             {
+                char Output[] = "Token nicht korrekt";
+                outPutStart(599, Output);
                 // cout << "Token nicht gegeben" << endl;
             }
         }
@@ -438,14 +453,14 @@ int main()
         }
         else
         {
-            // cout << "[SERVER]: Konnte leider mit dem Befehl nichts anfangen, bisher gibt es nur 'CreateUser' und 'GetToken'" << endl;
+            char Output[] = "Befehl nicht bekannt. Guck im Wiki nach, dort stehen alle Befehle.";
+            outPutStart(599, Output);
         }
     }
     else
     {
-        // cout << "[SERVER]: Habe leider keinen richtigen Befehl erhalten";
+        char Output[] = "Befehl-Parameter nicht gegeben. Es muss wirklich \"Befehl\" heißen.";
+        outPutStart(599, Output);
     }
-
-    // cout << endl << "[SERVER]: Done" << endl << endl;
     return 0;
 }
