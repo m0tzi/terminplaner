@@ -59,11 +59,15 @@
                 console.log("ERFOLG");
                 $("#OutputDiv").addClass("showMe");
                 $("#OutputTxt").text(data.Server); // .Server heißt der key zu Value. JSON braucht nen Key, auch wenn es noch nicht mehr als eine Value gibt
-                console.log(data.Server);
+                console.log(data);
             }).fail(function(data) {
                 console.log("Misserfolg");
                 $("#OutputDiv").addClass("showMe");
-                $("#OutputTxt").text(data.responseJSON.Server);
+                try {
+                    $("#OutputTxt").text(data.responseJSON.Server);
+                } catch (e) {
+                    $("#OutputTxt").text(data.Server);
+                }
                 console.log(data);
             })
         }

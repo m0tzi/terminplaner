@@ -63,3 +63,5 @@
 [Mon May 27 20:03:29 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
 [Mon May 27 21:13:41 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
 [Mon May 27 21:13:56 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sat Jun 01 17:17:34 2019] [error] [client 127.0.0.1] File does not exist: c:/temp/apache/htdocs/favicon.ico
+[Mon Jun 03 19:02:43 2019] [error] [client 127.0.0.1] File does not exist: c:/temp/apache/htdocs/favicon.ico
