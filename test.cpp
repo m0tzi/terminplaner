@@ -176,10 +176,17 @@ int makeUser(char Username[41], char Password[41], char *token)
 		}
 		else
 		{
-			// HIER WIP, im Grunde kann ich auch beim getUser den struct zurückgeben und den return int als Pointer übergeben, ist aber bisher nicht so.
+			// HIER WIP, im Grunde kann ich auch beim getUser den struct zurï¿½ckgeben und den return int als Pointer ï¿½bergeben, ist aber bisher nicht so.
 			Userdaten *User = new Userdaten;
 			strcpy(User->Username, Username);
 			strcpy(User->Password, Password);
+			char *Token = new char[201];
+			FILE * exists;
+			do{
+				Token = TokenGen(200);
+				exists = fopen(getUserTxt(Token), "r");
+			} while (exists != NULL);
+
 			strcpy(User->token, TokenGen(200));
 			fwrite(User, sizeof(Userdaten), 1, f);
 			fclose(f);
@@ -210,47 +217,53 @@ int makeUser(char Username[41], char Password[41], char *token)
 
 int makeDate(char token[201], Date *termin)
 {
+	FILE *f = fopen(getDateTxt(termin->Datename), "r");
+	if (f == NULL){
+		char *txt = getUserTxt(token);
+		f = fopen(txt, "a");
+		if (f == NULL)
+		{
+			// cout << "Failed, didn't find the User" << endl;
+			return -1;
+		}
+		fwrite(termin->Datename, sizeof(termin->Datename), 1, f);
+		fclose(f);
+		// cout << "Dateiverweiï¿½ beim User hinzugefï¿½gt" << endl;
+		f = fopen(getDateTxt(termin->Datename), "w+");
+		if (f == NULL)
+		{
+			// cout << "Failed, coun't create the Date-File" <<endl;
+			return -2;
+		}
 
-	char *txt = getUserTxt(token);
-	FILE *f = fopen(txt, "a");
-	if (f == NULL)
-	{
-		// cout << "Failed, didn't find the User" << endl;
-		return -1;
+		fwrite(termin, sizeof(Date), 1, f);
+		fclose(f);
+		cout << "Termin erstellt, mit den Daten : " << termin->DateDescription << endl;
+		return 0;
 	}
-	fwrite(termin->Datename, sizeof(termin->Datename), 1, f);
-	fclose(f);
-	// cout << "Dateiverweiß beim User hinzugefügt" << endl;
-	f = fopen(getDateTxt(termin->Datename), "w+");
-	if (f == NULL)
-	{
-		// cout << "Failed, coun't create the Date-File" <<endl;
-		return -2;
+	//Datei wurde schon erstellt. Nicht mehr in benutzung, da wir jetzt Tokens auch fÃ¼r Termine benutzen
+	else{
+		return -3;
 	}
-
-	fwrite(termin, sizeof(Date), 1, f);
-	fclose(f);
-	 cout << "Termin erstellt, mit den Daten : " << termin->DateDescription << endl;
-	return 0;
 }
 int getDate(char Datename[51], char *out)
 {
 	FILE *f = fopen(getDateTxt(Datename), "r");
 	if (f == NULL)
 	{
-		cout << "getSingleDateFail" << endl << "File: " << getDateTxt(Datename)<< endl;
+		//cout << "getSingleDateFail" << endl << "File: " << getDateTxt(Datename) << endl;
 		return -1;
 	}
 	Date *termin = new Date;
 	fread(termin, sizeof(Date), 1, f);
 	strcat(out, "{\"termin\":\"");
 	strcat(out, termin->Datename);
-	strcat(out, "\",Beschreibung\":\"");
+	strcat(out, "\",\"Beschreibung\":\"");
 	strcat(out, termin->DateDescription);
-	strcat(out, "\",Time\":\"");
+	strcat(out, "\",\"Time\":\"");
 	strcat(out, termin->Time);
 	strcat(out, "\"}");
-	cout << "getSingleDate: " << endl << *out << endl;
+	//cout << "getSingleDate: " << endl << out << endl;
 	//strcat()
 	// cout << "termin: " << termin->Datename << endl;
 	// cout << "Beschreibung: " << termin->DateDescription << endl;
@@ -258,7 +271,7 @@ int getDate(char Datename[51], char *out)
 }
 int getDates(char token[201], char** outPut)
 {
-	FILE *f = fopen(getUserTxt(token), "rb");
+	FILE *f = fopen(getUserTxt(token), "r");
 	if (f == NULL)
 	{
 		return -1;
@@ -267,43 +280,40 @@ int getDates(char token[201], char** outPut)
 	// Fehler, in den UserTxt Dateien werden ja nur die wirklichen Termine gespeichert
 	char *Datename = new char[51];
 	int AllDates = RowsInFile(f, 0, sizeof(Date));
-	char* out = new char[AllDates*sizeof(Date) + (AllDates*36) + 1]; // chars + [] + komma - 1 komma + die anführungszeichen + {}
-	strcat(out, "[");
+	char* out = new char[AllDates*sizeof(Date) + (AllDates * 36) + 1]; // chars + [] + komma - 1 komma + die anfï¿½hrungszeichen + {}
+	strcpy(out, "[");
 	fseek(f, 0, SEEK_SET);
+	fread(Datename, sizeof(char), 51, f);
 	while (!feof(f))
 	{
-		fread(Datename, 1, 51, f);
-		cout << "Dateiname gefunden: " << Datename << endl;
+		//cout << "Dateiname gefunden: " << Datename << endl;
 		getDate(Datename, out);
+		fread(Datename, sizeof(char), 51, f);
 		if (!feof(f)){
 			strcat(out, ",");
 		}
+
 	}
 	strcat(out, "]");
 	*outPut = out;
-	cout << "FirstPointer: " << endl << out << endl;
+	//cout << "FirstPointer: " << endl << out << endl;
 	return 0;
 }
 
-void outPutStart(int StatusCode, char *Desc) // int length | ist noch Temporär, vielleicht gar nicht nötig, da es keine Nullerkennung innerhalb des Strings geben sollte.
+void outPutStart(int StatusCode, char *Desc) // int length | ist noch Temporï¿½r, vielleicht gar nicht nï¿½tig, da es keine Nullerkennung innerhalb des Strings geben sollte.
 {
 	cout << "Content-Type: application/json\r\n";
-	cout << "Access-Control-Allow-Origin: http://192.168.0.192\r\n"; // WICHTIG, wenn man nicht über localhost geht.
+	cout << "Access-Control-Allow-Origin: http://192.168.0.192\r\n"; // WICHTIG, wenn man nicht ï¿½ber localhost geht.
 	cout << "Status:" << StatusCode << "\r\n\r\n";
-	cout << "{ \"Server\" : \"" << Desc << "\" }";
-
-	// for (int i = 0; i < lenght; i++){
-	//     cout << Desc[i];
-	// }
-
-
-
-	// cout << "\" }";
+	if (Desc[0] != '[')
+		cout << "{ \"Server\" : \"" << Desc << "\" }";
+	else
+		cout << "{ \"Server\" : " << Desc << " }";
 }
 
 int main()
 {
-	cout << "Content-Type: plain/text\r\n\r\n"; //DELETE - hier nur wenn ich irgendwo cout einfüge zum Testen
+	 //cout << "Content-Type: plain/text\r\n\r\n"; //DELETE - hier nur wenn ich irgendwo cout einfï¿½ge zum Testen
 	char c[1000];
 	cin >> c;
 	// cout << "[SERVER]: Erhaltene Daten: " << c << endl;
@@ -399,7 +409,7 @@ int main()
 				strcpy(SearchforValue, "Desc=");
 				char *Desc = new char[401];
 				Pos = ValuePosition(c, SearchforValue);
-				if (Pos >= 0) // WICHTIG : Hier muss noch die abfrage rein, ob es den User wirklich gibt. wofür es noch keine Funktion gibt.
+				if (Pos >= 0) // WICHTIG : Hier muss noch die abfrage rein, ob es den User wirklich gibt. wofï¿½r es noch keine Funktion gibt.
 				{
 					GetValue(Desc, Pos, c, 401);
 					strcpy(SearchforValue, "Time=");
@@ -417,9 +427,9 @@ int main()
 							GetValue(Datename, Pos, c, 51);
 							Date *Termin = new Date;
 							strcpy(Termin->Datename, Datename);
-							// cout << "Termin überschrieben" << endl;
+							// cout << "Termin ï¿½berschrieben" << endl;
 							strcpy(Termin->DateDescription, Desc);
-							strcpy(Termin->Time, Time); // ICH KANN VON ANFANGAN DEN VERDAMMTEN STRUCT BENUTZEN, egal, später.
+							strcpy(Termin->Time, Time); // ICH KANN VON ANFANGAN DEN VERDAMMTEN STRUCT BENUTZEN, egal, spï¿½ter.
 							switch (makeDate(Token, Termin)){
 							case 0:{
 								char *Output = new char[22 + sizeof(Termin->Datename)];
@@ -433,6 +443,12 @@ int main()
 							case -2:{
 								char Output[] = "File-Error";
 								outPutStart(599, Output);
+								break;
+							}
+							case -3:{
+								char Output[] = "Solch ein Termin wurde bereits erstellt";
+								outPutStart(598, Output);
+								break;
 							}
 							}
 						}
@@ -484,7 +500,7 @@ int main()
 	}
 	else
 	{
-		char Output[] = "Befehl-Parameter nicht gegeben. Es muss wirklich \"Befehl\" heißen.";
+		char Output[] = "Befehl-Parameter nicht gegeben. Es muss wirklich \"Befehl\" heiï¿½en.";
 		outPutStart(599, Output);
 	}
 	return 0;
