@@ -8,32 +8,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http - equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-
     <script>
+        var Token;
         var Endpoint = "http://localhost/cgi-bin/Test.exe";
-        // $(Document).ready({
-        // function() {
-        function CreateUser() {
-            var parameter = {
-                "Username": $("#UsernameEnter").val(),
-                "Password": $("#PasswordEnter").val(),
-                "Befehl": "CreateUser"
-            }
-            CallServer(parameter);
-        }
 
-        function GetToken() {
-            var parameter = {
-                "Username": $("#UsernameEnter").val(),
-                "Password": $("#PasswordEnter").val(),
-                "Befehl": "GetToken"
-            }
-            CallServer(parameter);
+        function CallServer(parameter) {
+            var Prom = jQuery.Deferred();
+            $.ajax({
+                url: Endpoint,
+                method: "Post",
+                data: parameter
+            }).done(function(data) {
+                console.log("ERFOLG");
+                console.log(data);
+                Prom.resolve(data);
+            }).fail(function(data) {
+                console.log("Misserfolg");
+                console.log(data);
+                Prom.reject();
+            });
+            return Prom.promise();
         }
 
         function CreateDate() {
             var parameter = {
-                "Token": $("#TokenEnter").val(),
+                "Token": Token,
                 "Desc": $("#Desc").val(),
                 "Time": $("#Time").val(),
                 "DateName": $("#DateName").val(),
@@ -43,95 +42,103 @@
         }
 
         function GetDates() {
+            console.log(Token);
             var parameter = {
-                "Token": $("#TokenEnter").val(),
+                "Token": Token,
                 "Befehl": "GetDates"
             }
             CallServer(parameter);
         }
 
-        function CallServer(parameter) {
-            $.ajax({
-                url: Endpoint,
-                method: "Post",
-                data: parameter
-            }).done(function(data) {
-                console.log("ERFOLG");
-                $("#OutputDiv").addClass("showMe");
-                $("#OutputTxt").text(data.Server); // .Server heißt der key zu Value. JSON braucht nen Key, auch wenn es noch nicht mehr als eine Value gibt
-                console.log(data);
-            }).fail(function(data) {
-                console.log("Misserfolg");
-                $("#OutputDiv").addClass("showMe");
-                try {
-                    $("#OutputTxt").text(data.responseJSON.Server);
-                } catch (e) {
-                    $("#OutputTxt").text(data.Server);
-                }
-                console.log(data);
-            })
+        function CreateUser() {
+            var parameter = {
+                "Username": $("#UsernameEnter").val(),
+                "Password": $("#PasswordEnter").val(),
+                "Befehl": "CreateUser"
+            }
+            $.when(CallServer(parameter)).done(function(data) {
+                Token = data.Server;
+                createDashboard();
+            });
         }
-        // $.ajax({
-        //     url: "http://localhost/cgi-bin/Test.exe",
-        //     method: "Post",
-        //     data: {
-        //         "Username": $("#UsernameEnter").val(),
-        //         "Password": $("#PasswordEnter").val(),
-        //         "Token": "xryoQEIShakAKLmimlOgZvINXrwZGTTPfvBuwRDJVtVSq_lMRTfFDgrxFvxS_OJDzwALqkwdmJWXZslKLJLaNTFY_nlNCFGlEdKryvgiIMLJvMbwClXxoEIkbAqBqnLqZW-bMjBazzVLvZfhyDYLoa-bHePYvNNNt_BbIgKdBdfieaQQNYjTHqsBhEQhc_smJUWeQCcw",
-        //         "Befehl": "GetDates",
-        //         "Desc": "Hello this is just a test Kappa",
-        //         "Time": "unwichtig",
-        //         "DateName": "Erster_Test"
-        //     },
-        //     success: function(data) {
-        //         console.log(data);
-        //     },
-        //     fail: function(data) {
-        //         console.log(data)
-        //     }
-        // });
-    </script>
 
+        function GetToken() {
+            var parameter = {
+                "Username": $("#UsernameEnter").val(),
+                "Password": $("#PasswordEnter").val(),
+                "Befehl": "GetToken"
+            }
+            $.when(CallServer(parameter)).done(function(data) {
+                Token = data.Server;
+                createDashboard();
+            });
+        }
+
+        async function createDashboard() {
+            $.when(GetDates()).done(function() {
+
+            });
+            $(".CenterMe").addClass("hide");
+            $(".Dashboard").removeClass("hide");
+        }
+        $(document).ready(function() {
+            //WIP
+        })
+    </script>
 </head>
 
 <body>
-    <div class="body">
-        <div class="UserData container">
-            <div class="input">
-                <div class="labels">
-                    <span>Username<br>Passwort</span>
-                </div>
-                <div class="inputs">
-                    <input type="text" name="Username" id="UsernameEnter">
-                    <input type="password" name="Password" id="PasswordEnter">
-                </div>
+    <div class="CenterMe">
+        <div class="Startpage">
+            <div class="inputs">
+                <input type="text" placeholder="Username" id="UsernameEnter" />
+                <input type="password" placeholder="Password" id="PasswordEnter" />
             </div>
-            <div class="button">
-                <button id="CreateUser" onclick="CreateUser()">Erstelle User</button>
-                <button id="GetToken" onclick="GetToken()">Token zum User</button>
+            <div class="inputs">
+                <button onclick="GetToken()">
+                    Login
+                </button>
+                <button onclick="CreateUser()">
+                    Register
+                </button>
             </div>
-        </div>
-        <div class="DateData container">
-            <div class="input">
-                <div class="labels">
-                    <span>Token<br>Desc.<br>Time<br>DateName</span>
-                </div>
-                <div class="inputs">
-                    <input type="text" id="TokenEnter">
-                    <input type="text" id="Desc">
-                    <input type="text" id="Time">
-                    <input type="text" id="DateName">
-                </div>
-            </div>
-            <div class="button">
-                <button id="CreateDate" onclick="CreateDate()">Erstelle Termin</button>
-                <button id="GetDates" onclick="GetDates()">Termine zum User</button>
-            </div>
-        </div>
-        <div class="Serverantwort TokenContainer" id="OutputDiv">
-            <textarea id="OutputTxt" cols="30" rows="10" readonly></textarea>
         </div>
     </div>
+
+    <div class="Dashboard hide">
+        <div class="Userdata">
+
+        </div>
+        <div class="Logout">
+            <img src="https://img.pngio.com/close-delete-door-exit-log-out-logout-remove-icon-png-close-the-door-512_512.png" alt="logout" class="logoutimg" />
+        </div>
+        <div class="Main">
+            <div class="Befehle">
+                <div class="content">WIP<br>Add Date</div>
+            </div>
+            <div class="displayDates">
+                <div class="content">
+                    <p class="title">
+                        Überschrift
+                    </p>
+                    <p class="desc">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos nesciunt doloremque consectetur debitis quam dignissimos cupiditate quidem aliquid alias! Id culpa animi aliquid! Optio soluta nesciunt consectetur aliquam dolor provident?
+                    </p>
+                    <p class="Datum">11.1.2019</p>
+
+                </div>
+                <div class="content"></div>
+                <div class="content"></div>
+                <div class="content"></div>
+                <div class="content"></div>
+                <div class="content"></div>
+                <div class="content"></div>
+                <div class="content"></div>
+
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>

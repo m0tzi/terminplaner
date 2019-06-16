@@ -65,3 +65,43 @@
 [Mon May 27 21:13:56 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
 [Sat Jun 01 17:17:34 2019] [error] [client 127.0.0.1] File does not exist: c:/temp/apache/htdocs/favicon.ico
 [Mon Jun 03 19:02:43 2019] [error] [client 127.0.0.1] File does not exist: c:/temp/apache/htdocs/favicon.ico
+[Tue Jun 04 19:34:58 2019] [error] [client 127.0.0.1] File does not exist: c:/temp/apache/htdocs/favicon.ico
+[Tue Jun 04 20:04:34 2019] [error] [client 127.0.0.1] File does not exist: c:/temp/apache/htdocs/favicon.ico
+[Sat Jun 08 21:32:34 2019] [error] [client 127.0.0.1] File does not exist: c:/temp/apache/htdocs/favicon.ico
+[Sun Jun 16 16:19:02 2019] [error] [client 127.0.0.1] File does not exist: c:/temp/apache/htdocs/favicon.ico
+[Sun Jun 16 16:29:32 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 16:29:54 2019] [error] [client 127.0.0.1] File does not exist: c:/temp/apache/htdocs/favicon.ico
+[Sun Jun 16 16:30:06 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 16:30:17 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 16:30:18 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 16:30:20 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 16:30:26 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 16:30:50 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 16:52:17 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 16:54:33 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 16:54:34 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 16:54:36 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 16:54:38 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 16:54:39 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 16:54:39 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 16:54:41 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 17:02:38 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 17:03:26 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 17:03:32 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 17:07:47 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 17:29:18 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 17:38:50 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 17:44:43 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 17:46:43 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 17:48:06 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 17:50:30 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 17:51:10 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 17:53:07 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 17:55:52 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 17:58:58 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 18:02:52 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 18:05:23 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 18:08:28 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 18:08:47 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 18:10:39 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Sun Jun 16 18:12:20 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe

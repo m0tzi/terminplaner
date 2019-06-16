@@ -1,178 +1,243 @@
-@-webkit-keyframes FadeIn {
-  0% {
-    -webkit-transform: scale(0);
-            transform: scale(0);
-  }
-  70% {
-    -webkit-transform: scale(1.1);
-            transform: scale(1.1);
-  }
-  100% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-  }
-}
-
-@keyframes FadeIn {
-  0% {
-    -webkit-transform: scale(0);
-            transform: scale(0);
-  }
-  70% {
-    -webkit-transform: scale(1.1);
-            transform: scale(1.1);
-  }
-  100% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-  }
-}
-
 body {
-  background-color: #1b2431;
-  width: 100vw;
+  background-color: #1b1D2A;
+  margin: 0;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.Dashboard {
+  display: -ms-grid;
+  display: grid;
+  width: 90vw;
   height: 100vh;
+  margin-left: auto;
+  margin-right: auto;
+  -ms-grid-columns: 1fr 2fr 1fr;
+      grid-template-columns: 1fr 2fr 1fr;
+  -ms-grid-rows: 5rem 1fr;
+      grid-template-rows: 5rem 1fr;
+      grid-template-areas: "Userdata . Logout" "Main Main Main";
 }
 
-.body {
-  font: 14px fantasy;
+.content {
+  background-color: #ff6e48;
+  color: white;
+  border: 2px solid black;
+  border-radius: 10px;
+}
+
+.Main {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 45% 45%;
-      grid-template-columns: 45% 45%;
-  -ms-grid-rows: 50vh auto;
-      grid-template-rows: 50vh auto;
-      grid-template-areas: "User Date" "Token Token";
-  grid-gap: 10% 10%;
-  justify-items: stretch;
-  width: 80%;
-  min-width: 800px;
-  margin-top: 10%;
-  margin-left: 10%;
-}
-
-.body div.container {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-rows: 25% max-content max-content max-content;
-      grid-template-rows: 25% -webkit-max-content -webkit-max-content -webkit-max-content;
-      grid-template-rows: 25% max-content max-content max-content;
-  -ms-grid-columns: 25% 50% 25%;
-      grid-template-columns: 25% 50% 25%;
-  grid-gap: 5% 0%;
-      grid-template-areas: ". . ." ". Eingabe ." ". Buttons ." ". Ausgabe .";
-}
-
-.body .TokenContainer {
-  display: none;
-  opacity: 0%;
-  -webkit-transition: all 2s;
-  transition: all 2s;
-}
-
-.body .TokenContainer textarea {
-  width: calc(100% - 6px);
-  height: 100%;
-}
-
-.body .showMe {
-  display: block !important;
-  opacity: 100% !important;
-  -webkit-animation: FadeIn 2s ease-out normal backwards;
-          animation: FadeIn 2s ease-out normal backwards;
-}
-
-.body div.TokenContainer,
-.body div.container {
-  background: #ff6e48;
-  -webkit-box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-          box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  -webkit-transition: all 250ms;
-  transition: all 250ms;
-}
-
-.body .input {
   -ms-grid-row: 2;
-  -ms-grid-column: 2;
-  grid-area: Eingabe;
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: 30% 65%;
-      grid-template-columns: 30% 65%;
-  -ms-grid-rows: auto;
-      grid-template-rows: auto;
-      grid-template-areas: "label text";
-  grid-gap: 0% 5%;
-}
-
-.body .labels {
-  -ms-grid-row: 1;
   -ms-grid-column: 1;
-  grid-area: label;
+  -ms-grid-column-span: 3;
+  grid-area: Main;
+  -ms-grid-columns: minmax(50rem, 5fr) minmax(10rem, 1fr);
+      grid-template-columns: minmax(50rem, 5fr) minmax(10rem, 1fr);
+      grid-template-areas: "Display Order";
 }
 
-.body .inputs {
+.Main .Befehle {
   -ms-grid-row: 1;
   -ms-grid-column: 2;
-  grid-area: text;
+  grid-area: Order;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+
+.Main .Befehle .content {
   width: 100%;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
+  height: 20%;
+}
+
+.Main .displayDates {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  grid-area: Display;
+  -ms-grid-columns: (minmax(15rem, 1fr))[auto-fit];
+      grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  grid-auto-rows: 10rem;
+}
+
+.Main .displayDates .content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  padding: 0 2rem;
 }
 
-.body .button {
-  -ms-grid-row: 3;
-  -ms-grid-column: 2;
-  grid-area: Buttons;
+.Main .displayDates .content * {
+  text-align: center;
+  line-height: 0.9;
+  -webkit-margin-before: 0.5em;
+          margin-block-start: 0.5em;
+  -webkit-margin-after: 0.5em;
+          margin-block-end: 0.5em;
+}
+
+.Main .displayDates .content p.title {
+  font-size: 250%;
+}
+
+.Main .displayDates .content p.desc {
+  font-size: 80%;
+  max-height: 70px;
+  overflow-y: auto;
+}
+
+.Main .displayDates .content .Datum {
+  font-size: 130%;
+  text-align: right;
+  font-weight: bolder;
+}
+
+.Userdata {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  grid-area: Userdata;
+}
+
+.Logout {
+  -ms-grid-row: 1;
+  -ms-grid-column: 3;
+  grid-area: Logout;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 100%;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  word-wrap: normal;
+  justify-items: right;
+  -webkit-transition: 0.25;
+  transition: 0.25;
 }
 
-.body .button button {
-  min-height: 3rem;
-  width: 100%;
+.Logout img {
+  margin-left: auto;
+  margin-right: 2rem;
 }
 
-.body .container:hover {
-  z-index: 2;
-  -webkit-transform: scale(1.1);
-          transform: scale(1.1);
+.CenterMe {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 2fr 1fr;
+      grid-template-columns: 1fr 2fr 1fr;
+  -ms-grid-rows: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+      grid-template-areas: ". . ." ". Content ." ". . .";
+  height: 100vh;
 }
 
-.body .UserData {
-  -ms-grid-row: 1;
-  -ms-grid-column: 1;
-  grid-area: User;
-}
-
-.body .DateData {
-  -ms-grid-row: 1;
-  -ms-grid-column: 2;
-  grid-area: Date;
-}
-
-.body .Serverantwort {
+.Startpage {
   -ms-grid-row: 2;
-  -ms-grid-column: 1;
-  -ms-grid-column-span: 2;
-  grid-area: Token;
+  -ms-grid-column: 2;
+  grid-area: Content;
+  width: 30rem;
+  margin: auto;
+  height: 20rem;
+  background-color: #ff6e48;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: (minmax(60px, 1fr))[auto-fit];
+      grid-template-rows: repeat(auto-fit, minmax(60px, 1fr));
+}
+
+.Startpage .inputs {
+  height: -webkit-min-content;
+  height: -moz-min-content;
+  height: min-content;
+  width: -webkit-min-content;
+  width: -moz-min-content;
+  width: min-content;
+  margin: auto;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+}
+
+.Startpage .inputs button,
+.Startpage .inputs input {
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+  text-align: center;
+  font-size: 120%;
+  color: white;
+}
+
+.Startpage .inputs input {
+  width: 200px;
+  background-color: transparent;
+  border: none;
+  padding: 14px 10px;
+  outline: none;
+  color: white;
+  border-radius: 24px;
+}
+
+.Startpage .inputs button {
+  border-radius: 15px;
+  background-color: #6AAECF;
+  border: none;
+  width: 200px;
+  padding: 14px 10px;
+}
+
+.Startpage .inputs button:nth-child(2n) {
+  background-color: #108B45;
+}
+
+div {
+  -webkit-animation: fadein 0.5s forwards ease-in-out;
+          animation: fadein 0.5s forwards ease-in-out;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.hide {
+  display: none;
+}
+
+::-webkit-scrollbar {
+  width: 1rem;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #ffffff5e;
+  border: 1px solid #0000005e;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@-webkit-keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 /*# sourceMappingURL=Test.css.map */

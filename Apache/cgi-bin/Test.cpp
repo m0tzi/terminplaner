@@ -68,6 +68,7 @@ struct Userdaten *getUserDataFromFile(FILE *f, char Username[41], char Password[
 {
 	int size = sizeof(Userdaten);
 	Userdaten *User = new Userdaten;
+	// cout << "in getUserDataFromFile: " << Username;
 	// cout << "[SERVER]: ------------- FILE CONTAINS ----------------" << endl;
 	while (!feof(f))
 	{
@@ -112,6 +113,7 @@ int getUser(char Username[41], char Password[41], char* token)
 	}
 	else
 	{
+		// cout << "Username in getUser ist:" << Username << endl;
 		Userdaten* User = getUserDataFromFile(f, Username, Password);
 		fclose(f);
 		// cout << User.Username[0] << endl;
@@ -180,6 +182,13 @@ int makeUser(char Username[41], char Password[41], char *token)
 			Userdaten *User = new Userdaten;
 			strcpy(User->Username, Username);
 			strcpy(User->Password, Password);
+			char *Token = new char[201];
+			FILE * exists;
+			do{
+				Token = TokenGen(200);
+				exists = fopen(getUserTxt(Token), "r");
+			} while (exists != NULL);
+
 			strcpy(User->token, TokenGen(200));
 			fwrite(User, sizeof(Userdaten), 1, f);
 			fclose(f);
@@ -210,35 +219,41 @@ int makeUser(char Username[41], char Password[41], char *token)
 
 int makeDate(char token[201], Date *termin)
 {
+	FILE *f = fopen(getDateTxt(termin->Datename), "r");
+	if (f == NULL){
+		char *txt = getUserTxt(token);
+		f = fopen(txt, "a");
+		if (f == NULL)
+		{
+			// cout << "Failed, didn't find the User" << endl;
+			return -1;
+		}
+		fwrite(termin->Datename, sizeof(termin->Datename), 1, f);
+		fclose(f);
+		// cout << "Dateiverwei� beim User hinzugef�gt" << endl;
+		f = fopen(getDateTxt(termin->Datename), "w+");
+		if (f == NULL)
+		{
+			// cout << "Failed, coun't create the Date-File" <<endl;
+			return -2;
+		}
 
-	char *txt = getUserTxt(token);
-	FILE *f = fopen(txt, "a");
-	if (f == NULL)
-	{
-		// cout << "Failed, didn't find the User" << endl;
-		return -1;
+		fwrite(termin, sizeof(Date), 1, f);
+		fclose(f);
+		cout << "Termin erstellt, mit den Daten : " << termin->DateDescription << endl;
+		return 0;
 	}
-	fwrite(termin->Datename, sizeof(termin->Datename), 1, f);
-	fclose(f);
-	// cout << "Dateiverwei� beim User hinzugef�gt" << endl;
-	f = fopen(getDateTxt(termin->Datename), "w+");
-	if (f == NULL)
-	{
-		// cout << "Failed, coun't create the Date-File" <<endl;
-		return -2;
+	//Datei wurde schon erstellt. Nicht mehr in benutzung, da wir jetzt Tokens auch für Termine benutzen
+	else{
+		return -3;
 	}
-
-	fwrite(termin, sizeof(Date), 1, f);
-	fclose(f);
-	 cout << "Termin erstellt, mit den Daten : " << termin->DateDescription << endl;
-	return 0;
 }
 int getDate(char Datename[51], char *out)
 {
 	FILE *f = fopen(getDateTxt(Datename), "r");
 	if (f == NULL)
 	{
-		cout << "getSingleDateFail" << endl << "File: " << getDateTxt(Datename)<< endl;
+		//cout << "getSingleDateFail" << endl << "File: " << getDateTxt(Datename) << endl;
 		return -1;
 	}
 	Date *termin = new Date;
@@ -250,7 +265,7 @@ int getDate(char Datename[51], char *out)
 	strcat(out, "\",\"Time\":\"");
 	strcat(out, termin->Time);
 	strcat(out, "\"}");
-	cout << "getSingleDate: " << endl << out << endl;
+	//cout << "getSingleDate: " << endl << out << endl;
 	//strcat()
 	// cout << "termin: " << termin->Datename << endl;
 	// cout << "Beschreibung: " << termin->DateDescription << endl;
@@ -267,38 +282,46 @@ int getDates(char token[201], char** outPut)
 	// Fehler, in den UserTxt Dateien werden ja nur die wirklichen Termine gespeichert
 	char *Datename = new char[51];
 	int AllDates = RowsInFile(f, 0, sizeof(Date));
-	char* out = new char[AllDates*sizeof(Date) + (AllDates*36) + 1]; // chars + [] + komma - 1 komma + die anf�hrungszeichen + {}
+	char* out = new char[AllDates*sizeof(Date) + (AllDates * 36) + 1]; // chars + [] + komma - 1 komma + die anf�hrungszeichen + {}
 	strcpy(out, "[");
 	fseek(f, 0, SEEK_SET);
+	fread(Datename, sizeof(char), 51, f);
 	while (!feof(f))
 	{
-		fread(Datename, sizeof(char), 51, f);
-		cout << "Dateiname gefunden: " << Datename << endl;
+		//cout << "Dateiname gefunden: " << Datename << endl;
 		getDate(Datename, out);
+		fread(Datename, sizeof(char), 51, f);
 		if (!feof(f)){
 			strcat(out, ",");
 		}
+
 	}
 	strcat(out, "]");
 	*outPut = out;
-	cout << "FirstPointer: " << endl << out << endl;
+	//cout << "FirstPointer: " << endl << out << endl;
 	return 0;
 }
 
 void outPutStart(int StatusCode, char *Desc) // int length | ist noch Tempor�r, vielleicht gar nicht n�tig, da es keine Nullerkennung innerhalb des Strings geben sollte.
 {
-	cout << "Content-Type: application/json\r\n";
-	cout << "Access-Control-Allow-Origin: http://192.168.0.192\r\n"; // WICHTIG, wenn man nicht �ber localhost geht.
+	// cout << "Access-Control-Allow-Origin: http://192.168.0.192\r\n"; // WICHTIG, wenn man nicht �ber localhost geht.
 	cout << "Status:" << StatusCode << "\r\n\r\n";
-	if(Desc[0] != '[')
+	if (Desc[0] != '[')
 		cout << "{ \"Server\" : \"" << Desc << "\" }";
 	else
-		cout << "{ \"Server\" : "  << Desc << " }";
+		cout << "{ \"Server\" : " << Desc << " }";
+}
+
+void cookieSetter(int StatusCode, char * Cookie){
+		cout << "Status:" << StatusCode << "\r\n";
+		cout << "Set-Cookie:CES=" << "Cookie" << "\r\n\r\n";
+		cout << "{ \"Server\" : \"" << "CES " <<Cookie << "\" }";
 }
 
 int main()
 {
-	// cout << "Content-Type: plain/text\r\n\r\n"; //DELETE - hier nur wenn ich irgendwo cout einf�ge zum Testen
+	//  cout << "Content-Type: plain/text\r\n\r\n"; //DELETE - hier nur wenn ich irgendwo cout einf�ge zum Testen
+	cout << "Content-Type: application/json\r\n";
 	char c[1000];
 	cin >> c;
 	// cout << "[SERVER]: Erhaltene Daten: " << c << endl;
@@ -307,12 +330,14 @@ int main()
 	char SearchforValue[100];
 	strcpy(SearchforValue, "Username=");
 	int Pos = ValuePosition(c, SearchforValue);
+	// cout << "In Main: Position des Usernamens ist: " << Pos << endl;
 	char *Username = new char[41];
 	char *Password = new char[41];
 	char *Befehl = new char[41];
 	if (Pos >= 0)
 	{
 		GetValue(Username, Pos, c, 41);
+		// cout << "in Main ist der Username: " << Username << " angekommen" << endl;
 	}
 
 	strcpy(SearchforValue, "Password=");
@@ -354,7 +379,7 @@ int main()
 			}
 			case 0:
 			{
-				outPutStart(201, token);
+				cookieSetter(201, token);
 				break;
 			}
 			}
@@ -379,7 +404,7 @@ int main()
 				break;
 			}
 			case 2:{
-				outPutStart(200, token);
+				cookieSetter(200, token);
 			}
 			}
 		}
@@ -428,6 +453,12 @@ int main()
 							case -2:{
 								char Output[] = "File-Error";
 								outPutStart(599, Output);
+								break;
+							}
+							case -3:{
+								char Output[] = "Solch ein Termin wurde bereits erstellt";
+								outPutStart(598, Output);
+								break;
 							}
 							}
 						}
@@ -479,7 +510,7 @@ int main()
 	}
 	else
 	{
-		char Output[] = "Befehl-Parameter nicht gegeben. Es muss wirklich \"Befehl\" hei�en.";
+		char Output[] = "Befehl-Parameter nicht gegeben. Es muss wirklich \"Befehl\" bennant werden.";
 		outPutStart(599, Output);
 	}
 	return 0;
