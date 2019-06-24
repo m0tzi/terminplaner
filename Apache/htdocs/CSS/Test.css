@@ -11,13 +11,21 @@
 }
 
 body{
-  font-size: 1.6rem;
+    font-size: 1.6rem;
   /* SET HEIGHT FOR LOGINPAGE */
-  width: 100%;
-  height: 100vh;
-
+    background-color: linear-gradient(45deg, rgba(145,214,181,1) , rgba(98,102,173,1));
 }
 
+.wrap-all{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+
+      width: 100%;
+    height: 100vh;
+}
 
 .CenterMe{
 
@@ -28,5 +36,63 @@ body{
   justify-content: center;
   align-items: center;
 
+  background-color: #FFF;
+  border-radius: .3rem;
+  box-shadow: .5rem 2.5rem 6rem rgba(0, 0, 0, .2);
+}
+
+.Startpage{
 
 }
+
+.inputs{
+
+}
+
+.inputs-btn{
+
+
+}
+
+.btn-login{
+
+}
+
+.Dashboard{
+
+}
+
+.Userdata{
+
+}
+
+.Logout{
+
+}
+
+.Main{
+
+}
+
+.Befehle{
+
+}
+
+.content{
+
+}
+
+.title{
+
+}
+
+.desc{
+
+}
+
+.Datum{
+
+}
+
+
+
