@@ -102,6 +102,10 @@ int makeDate(char token[201], Date *termin)
 	}
 }
 int deleteDate(char ID[201]) {
+	//cout << "Content-Type: plain/text\r\n";
+	//cout << "Status:" << 200 << "\r\n\r\n";
+	//cout << "ID rein: \r\n" << ID <<endl << "\r\n";
+	//cout << getDateTxt(ID) << endl;
 	return remove(getDateTxt(ID));
 	
 }
@@ -110,7 +114,7 @@ int ModifyDate(char token[201], Date *termin) {
 	//cout << "Status:" << 200 << "\r\n\r\n";
 	//cout << "going in";
 	FILE * f = new FILE;
-	f = fopen(getDateTxt(token), "w+");
+	f = fopen(getDateTxt(token), "w");
 	if (f == NULL)
 	{
 		//cout << "Failed, coun't create the Date-File" <<endl;
@@ -120,4 +124,30 @@ int ModifyDate(char token[201], Date *termin) {
 	fclose(f);
 	//cout << "Termin erstellt, mit den Daten : " << termin->DateDescription << endl;
 	return 0;
+}
+
+int ModifyPassword(char token[201], char NewPass[41], char OldPass[41]) {
+	int * Index = new int;
+	FILE *f = new FILE;
+	f = fopen("c:/temp/apache/cgi-bin/User.txt", "r+");
+	switch (getUserIndexFromFile(f, token, OldPass, Index)) {
+		case 0: {
+			fseek(f, sizeof(Userdaten) * (long)Index + 41, SEEK_SET);
+			fwrite(NewPass, 41, 1, f);
+			fclose(f);
+			delete(f);
+			delete(Index);
+			return 0;
+		}
+		case -1: {
+			delete(f);
+			delete(Index);
+			return -1;
+		}
+		default: {
+			delete(f);
+			delete(Index);
+			return -2;
+		}
+	}
 }

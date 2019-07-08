@@ -23,6 +23,29 @@ struct Userdaten *getUserDataFromFile(FILE *f, char Username[41], char Password[
 	}
 	return NULL;
 }
+int getUserIndexFromFile(FILE *f, char token[201], char Password[41], int * Index)
+{
+	int size = sizeof(Userdaten);
+	Userdaten *User = new Userdaten;
+	Index = 0;
+	// cout << "in getUserDataFromFile: " << Username;
+	// cout << "[SERVER]: ------------- FILE CONTAINS ----------------" << endl;
+	while (!feof(f))
+	{
+		fread(User, size, 1, f);
+		// cout << "[SERVER]: User : " <<User->Username << endl;// << " || Password: " << User->Password<< " || Token: " << User->token << endl;
+		if (strcmp(User->token, token) == 0)
+		{
+			if(strcmp(User->Password, Password))
+				return 0;
+			else return -1;
+			// cout << "[SERVER]: User " << Username <<" Existiert"<<endl;
+
+		}
+		Index++;
+	}
+	return -2;
+}
 
 int RowsInFile(FILE *f, int ResetToPosition, int SizeofData)
 {

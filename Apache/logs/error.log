@@ -131,3 +131,5 @@
 [Mon Jul 08 21:15:44 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
 [Mon Jul 08 21:16:39 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
 [Mon Jul 08 21:17:14 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Mon Jul 08 22:18:24 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe
+[Mon Jul 08 22:18:34 2019] [error] [client 127.0.0.1] Premature end of script headers: c:/temp/apache/cgi-bin/test.exe

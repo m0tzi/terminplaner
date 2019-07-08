@@ -5,6 +5,7 @@
 #include "structs.h"
 
 Userdaten *getUserDataFromFile(FILE *f, char Username[41], char Password[41]);
+int getUserIndexFromFile(FILE *f, char token[201], char Password[41], int * Index);
 int RowsInFile(FILE *f, int ResetToPosition, int SizeofData);
 int getUser(char Username[41], char Password[41], char* token);
 int getDate(char Datename[51], char *out);

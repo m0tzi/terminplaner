@@ -558,7 +558,7 @@ int main()
 							strcpy(Termin->DateDescription, Desc);
 							strcpy(Termin->Time, Time); // ICH KANN VON ANFANGAN DEN VERDAMMTEN STRUCT BENUTZEN, egal, sp�ter. #NOT
 							//cout << "so far so good" << endl;
-							switch (makeDate(Token, Termin)) {
+							switch (ModifyDate(Token, Termin)) {
 								case 0: {
 									//cout << "returned 0" << endl;
 									char *Output = new char[22 + sizeof(Termin->Datename)];
