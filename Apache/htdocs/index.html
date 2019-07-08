@@ -12,6 +12,13 @@
         var Token;
         var Endpoint = "http://localhost/cgi-bin/Test.exe";
 
+
+        function getCookie(name) {
+            var value = "; " + document.cookie;
+            var parts = value.split("; " + name + "=");
+            if (parts.length == 2) return parts.pop().split(";").shift();
+        }
+
         function CallServer(parameter) {
             var Prom = jQuery.Deferred();
             $.ajax({
@@ -42,9 +49,12 @@
         }
 
         function GetDates() {
-            console.log(Token);
+            console.log("Token benutzt:");
+            console.log("Ld_QoNAbkMHIPHunlRkfEKXhCYG-_hcEPsyECVaPjuuyhqmSqibczThsoweqtLcccfW_lAfKDlAjuhjxGdaYtknxMLUkGDNLEcxYrOYQYPuggjCRvxMaNkqntCpcBbbBPcOvypUidHImOZciMCKCruJXruEfOBGJikOyTQiFxZDjynK_iCokIcCvKCYxooppyRkiQzXx");
+
+
             var parameter = {
-                "Token": Token,
+                "Token": "Ld_QoNAbkMHIPHunlRkfEKXhCYG-_hcEPsyECVaPjuuyhqmSqibczThsoweqtLcccfW_lAfKDlAjuhjxGdaYtknxMLUkGDNLEcxYrOYQYPuggjCRvxMaNkqntCpcBbbBPcOvypUidHImOZciMCKCruJXruEfOBGJikOyTQiFxZDjynK_iCokIcCvKCYxooppyRkiQzXx",
                 "Befehl": "GetDates"
             }
             CallServer(parameter);
@@ -60,6 +70,21 @@
                 Token = data.Server;
                 createDashboard();
             });
+        }
+
+        function CreateDate() {
+            var parameter = {
+                "Befehl": "CreateDate",
+                "Token": "Ld_QoNAbkMHIPHunlRkfEKXhCYG-_hcEPsyECVaPjuuyhqmSqibczThsoweqtLcccfW_lAfKDlAjuhjxGdaYtknxMLUkGDNLEcxYrOYQYPuggjCRvxMaNkqntCpcBbbBPcOvypUidHImOZciMCKCruJXruEfOBGJikOyTQiFxZDjynK_iCokIcCvKCYxooppyRkiQzXx",
+                "Time": "Naechste Woche Dienstag",
+                "DateName": "DerLustigeMannAusDemInternet",
+                "Desc": "Hier ist der Lustig Mann aus dem Internet"
+            }
+            $.when(CallServer(parameter)).done(function(data) {
+                console.log(data);
+            }).fail(function(data) {
+                console.log(data);
+            })
         }
 
         function GetToken() {
@@ -114,7 +139,7 @@
         </div>
         <div class="Main">
             <div class="Befehle">
-                <div class="content">WIP<br>Add Date</div>
+                <div class="content" onclick="CreateDate()">WIP<br>Add Date</div>
             </div>
             <div class="displayDates">
                 <div class="content">
