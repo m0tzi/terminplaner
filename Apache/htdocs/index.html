@@ -37,16 +37,19 @@
             return Prom.promise();
         }
 
-        function CreateDate() {
-            var parameter = {
-                "Token": Token,
-                "Desc": $("#Desc").val(),
-                "Time": $("#Time").val(),
-                "DateName": $("#DateName").val(),
-                "Befehl": "CreateDate"
-            }
-            CallServer(parameter);
+        function RemoveDate() {
+
         }
+        // function CreateDate() {
+        //     var parameter = {
+        //         "Token": Token,
+        //         "Desc": $("#Desc").val(),
+        //         "Time": $("#Time").val(),
+        //         "DateName": $("#DateName").val(),
+        //         "Befehl": "CreateDate"
+        //     }
+        //     CallServer(parameter);
+        // }
 
         function GetDates() {
             console.log("Token benutzt:");
@@ -70,6 +73,33 @@
                 Token = data.Server;
                 createDashboard();
             });
+        }
+
+        function RemoveDate() {
+            var parameter = {
+                "Befehl": "DeleteDate",
+                "ID": "NsnPUdnoSyhTWGaU-MVX_PS_OAolUQvlADfeLoUYSTnunUtGIDkKReGJGRF_PhCPbwmkvylKDSmxMiLvSheCLqdpXpDAocLwHcyoODFSHpFdRClMsla-HAQmrYGJwWShwLcs-HvOewRvKibUpmjCdeVPyXPwFkEWwpMiLeU-bMtRWTKxzzWREopZRLJtJISDtDLFQIKq",
+            }
+            $.when(CallServer(parameter)).done(function(data) {
+                console.log(data);
+            }).fail(function(data) {
+                console.log(data);
+            })
+        }
+
+        function ModifyDate() {
+            var parameter = {
+                "Befehl": "ModifyDate",
+                "ID": "KqnaTsF-UqTdNbSFIsbqfgPEjBzWShQFBqDFHVfPmrRTfUgiFxkqkvlpErPSxKqfRA-yrYaCcD_vLjHfWMNqGBbBX_dYTJtfArvBQZDszQYNGMtPEAfKlzVZIgFujteYqwxmrLHPHNXG-oEryu_sTVaJtBlnW_qOLewdFYmnJUWodtOVhzBqllLnTBHjPYAxgOAeTybS",
+                "Time": "Letzte Woche Samstag",
+                "DateName": "Ich wurde verändert",
+                "Desc": "Ich liebe Gruppenarbeiten. Ich mein, ich hatte mal sowas wie Motivation, aber hey. Solange man sich die Gute Note abstauben kann nicht wahr?"
+            }
+            $.when(CallServer(parameter)).done(function(data) {
+                console.log(data);
+            }).fail(function(data) {
+                console.log(data);
+            })
         }
 
         function CreateDate() {
@@ -140,6 +170,8 @@
         <div class="Main">
             <div class="Befehle">
                 <div class="content" onclick="CreateDate()">WIP<br>Add Date</div>
+                <div class="content" onclick="ModifyDate()">WIP<br>Modify Date</div>
+                <div class="content" onclick="RemoveDate()">WIP<br>Remove Date</div>
             </div>
             <div class="displayDates">
                 <div class="content">

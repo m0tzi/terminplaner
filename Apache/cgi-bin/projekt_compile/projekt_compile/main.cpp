@@ -318,7 +318,8 @@ void outPutStart(int StatusCode, char *Desc) // int length | ist noch Tempor�r
 
 int main()
 {
-	//  cout << "Content-Type: plain/text\r\n\r\n"; //DELETE - hier nur wenn ich irgendwo cout einf�ge zum Testen
+	//cout << "Content-Type: plain/text\r\n";
+	//cout << "Status:" << 200 << "\r\n\r\n";
 	char c[1000];
 	cin >> c;
 	// cout << "[SERVER]: Erhaltene Daten: " << c << endl;
@@ -436,9 +437,11 @@ int main()
 							strcpy(Termin->Datename, Datename);
 							// cout << "Termin �berschrieben" << endl;
 							strcpy(Termin->DateDescription, Desc);
-							strcpy(Termin->Time, Time); // ICH KANN VON ANFANGAN DEN VERDAMMTEN STRUCT BENUTZEN, egal, sp�ter.
+							strcpy(Termin->Time, Time); // ICH KANN VON ANFANGAN DEN VERDAMMTEN STRUCT BENUTZEN, egal, sp�ter. #NOT
+							//cout << "so far so good" << endl;
 							switch (makeDate(Token, Termin)){
 							case 0:{
+								//cout << "returned 0" << endl;
 								char *Output = new char[22 + sizeof(Termin->Datename)];
 								strcpy(Output, "Termin ");
 								strcat(Output, Datename);
@@ -448,11 +451,13 @@ int main()
 							}
 							case -1:
 							case -2:{
+								//cout << "returned 1-2" << endl;
 								char Output[] = "File-Error";
 								outPutStart(599, Output);
 								break;
 							}
 							case -3:{
+								//cout << "returned 3" << endl;
 								char Output[] = "Solch ein Termin wurde bereits erstellt";
 								outPutStart(598, Output);
 								break;
@@ -497,6 +502,105 @@ int main()
 				char *outPut = NULL;
 				getDates(Token->token, &outPut);
 				outPutStart(200, outPut);
+			}
+			else {
+				outPutStart(499, "Ohne Token mach ich hier gar nichts!");
+			}
+		}
+		else if (strcmp(Befehl, "DeleteDate") == 0) {
+			strcpy(SearchforValue, "ID=");
+			char * ID = new char[201];
+			Pos = ValuePosition(c, SearchforValue);
+			if (Pos >= 0) {
+				GetValue(ID, Pos, c, 201);
+				switch (deleteDate(ID)) {
+					case 0: {
+						outPutStart(200, "Termin gelöscht");
+					}
+					default: {
+						outPutStart(599, "Termin konnte nicht gelöscht werden");
+					}
+				}
+			}
+			else {
+				outPutStart(499, "Ich brauch schon eine 'ID' wa?");
+			}
+		}
+		else if (strcmp(Befehl, "ModifyDate") == 0) {
+			char *Token = new char[201];
+			strcpy(SearchforValue, "ID=");
+			Pos = ValuePosition(c, SearchforValue);
+			if (Pos >= 0)
+			{
+				GetValue(Token, Pos, c, 201);
+				strcpy(SearchforValue, "Desc=");
+				char *Desc = new char[401];
+				Pos = ValuePosition(c, SearchforValue);
+				if (Pos >= 0) // WICHTIG : Hier muss noch die abfrage rein, ob es den User wirklich gibt. wof�r es noch keine Funktion gibt.
+				{
+					GetValue(Desc, Pos, c, 401);
+					strcpy(SearchforValue, "Time=");
+					char *Time = new char[51];
+					Pos = ValuePosition(c, SearchforValue);
+					if (Pos >= 0)
+					{
+						GetValue(Time, Pos, c, 401);
+						strcpy(SearchforValue, "DateName=");
+						char *Datename = new char[51];
+						Pos = ValuePosition(c, SearchforValue);
+						if (Pos >= 0)
+						{
+
+							GetValue(Datename, Pos, c, 51);
+							Date *Termin = new Date;
+							strcpy(Termin->Datename, Datename);
+							// cout << "Termin �berschrieben" << endl;
+							strcpy(Termin->DateDescription, Desc);
+							strcpy(Termin->Time, Time); // ICH KANN VON ANFANGAN DEN VERDAMMTEN STRUCT BENUTZEN, egal, sp�ter. #NOT
+							//cout << "so far so good" << endl;
+							switch (makeDate(Token, Termin)) {
+								case 0: {
+									//cout << "returned 0" << endl;
+									char *Output = new char[22 + sizeof(Termin->Datename)];
+									strcpy(Output, "Termin ");
+									strcat(Output, Datename);
+									strcat(Output, " wurde angepasst");
+									outPutStart(201, Output);
+									break;
+								}
+								case -2: {
+									//cout << "returned 1-2" << endl;
+									char Output[] = "File-Error";
+									outPutStart(599, Output);
+									break;
+								}
+							}
+						}
+						else
+						{
+							char Output[] = "Terminname nicht ok";
+							outPutStart(499, Output);
+						}
+					}
+					else
+					{
+						char Output[] = "Zeitangabe nicht ok";
+						outPutStart(498, Output);
+						// cout << "Keine Zeitangaben gemacht" << endl;
+					}
+				}
+				else
+				{
+					char Output[] = "Beschreibung kam im TS nicht an";
+					outPutStart(497, Output);
+					// cout << "Keine Beschreibung gegeben" << endl;
+				}
+			}
+			else
+			{
+				char Output[] = "Token nicht korrekt";
+				outPutStart(599, Output);
+				// cout << "Token nicht gegeben" << endl;
 			}
 		}
 		else

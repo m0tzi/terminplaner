@@ -51,6 +51,7 @@ void GetValue(char *Value, int pos, char c[1000], int Maxlength)
 void outPutStart(int StatusCode, char *Desc) // int length | ist noch Tempor�r, vielleicht gar nicht n�tig, da es keine Nullerkennung innerhalb des Strings geben sollte.
 {
 	// cout << "Access-Control-Allow-Origin: http://192.168.0.192\r\n"; // WICHTIG, wenn man nicht �ber localhost geht.
+	//  cout << "Content-Type: plain/text\r\n\r\n"; //DELETE - hier nur wenn ich irgendwo cout einf�ge zum Testen
 	cout << "Content-Type: application/json\r\n";
 	cout << "Status:" << StatusCode << "\r\n\r\n";
 	if (Desc[0] != '[')

@@ -31,7 +31,6 @@ int makeUser(char Username[41], char Password[41], char *token)
 				Token = TokenGen(200);
 				exists = fopen(getUserTxt(Token), "r");
 			} while (exists != NULL);
-			fclose(exists);
 
 			strcpy(User->token, Token);
 			fwrite(User, sizeof(Userdaten), 1, f);
@@ -62,13 +61,16 @@ int makeUser(char Username[41], char Password[41], char *token)
 }
 int makeDate(char token[201], Date *termin)
 {
-	FILE *f = fopen(getDateTxt(termin->Datename), "r");
+	//cout << "Content-Type: plain/text\r\n";
+	//cout << "Status:" << 200 << "\r\n\r\n";
+	//cout << "going in";
+	FILE *f = fopen(getDateTxt(token), "r");
 	if (f == NULL){
 		char *txt = getUserTxt(token);
 		f = fopen(txt, "a");
 		if (f == NULL)
 		{
-			// cout << "Failed, didn't find the User" << endl;
+			//cout << "Failed, didn't find the User" << endl;
 			return -1;
 		}
 		char *Token = new char[201];
@@ -77,15 +79,14 @@ int makeDate(char token[201], Date *termin)
 			Token = TokenGen(200);
 			exists = fopen(getDateTxt(Token), "r");
 		} while (exists != NULL);
-		fclose(exists);
 
 		fwrite(Token, 201, 1, f);
 		fclose(f);
-		// cout << "Dateiverwei� beim User hinzugef�gt" << endl;
+		 //cout << "Dateiverwei� beim User hinzugef�gt" << endl;
 		f = fopen(getDateTxt(Token), "w+");
 		if (f == NULL)
 		{
-			// cout << "Failed, coun't create the Date-File" <<endl;
+			 //cout << "Failed, coun't create the Date-File" <<endl;
 			return -2;
 		}
 
@@ -96,6 +97,27 @@ int makeDate(char token[201], Date *termin)
 	}
 	//Datei wurde schon erstellt. Nicht mehr in benutzung, da wir jetzt Tokens auch für Termine benutzen
 	else{
+		//cout << "Termin bereits erstellt" << endl;
 		return -3;
 	}
+}
+int deleteDate(char ID[201]) {
+	return remove(getDateTxt(ID));
+	
+}
+int ModifyDate(char token[201], Date *termin) {
+	//cout << "Content-Type: plain/text\r\n";
+	//cout << "Status:" << 200 << "\r\n\r\n";
+	//cout << "going in";
+	FILE * f = new FILE;
+	f = fopen(getDateTxt(token), "w+");
+	if (f == NULL)
+	{
+		//cout << "Failed, coun't create the Date-File" <<endl;
+		return -2;
+	}
+	fwrite(termin, sizeof(Date), 1, f);
+	fclose(f);
+	//cout << "Termin erstellt, mit den Daten : " << termin->DateDescription << endl;
+	return 0;
 }

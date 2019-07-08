@@ -75,9 +75,9 @@ int getUser(char Username[41], char Password[41], char* token)
 	}
 }
 
-int getDate(char Datename[51], char *out)
+int getDate(char Dateiname[201], char *out)
 {
-	FILE *f = fopen(getDateTxt(Datename), "r");
+	FILE *f = fopen(getDateTxt(Dateiname), "r");
 	//cout << "Content-Type: plain/text\r\n";
 	//cout << "Status:" << 200 << "\r\n\r\n";
 	//cout << "getDate" << endl << endl;
@@ -94,7 +94,10 @@ int getDate(char Datename[51], char *out)
 	strcat(out, termin->DateDescription);
 	strcat(out, "\",\"Time\":\"");
 	strcat(out, termin->Time);
+	strcat(out, "\",\"ID\":\"");
+	strcat(out, Dateiname);
 	strcat(out, "\"}");
+	return 0;
 }
 
 int getDates(char token[201], char** outPut)
@@ -106,22 +109,30 @@ int getDates(char token[201], char** outPut)
 	}
 	// fseek(f, sizeof(Userdaten), SEEK_SET);
 	// Fehler, in den UserTxt Dateien werden ja nur die wirklichen Termine gespeichert
-	char *Datename = new char[51];
-	int AllDates = RowsInFile(f, 0, sizeof(Date));
-	char* out = new char[AllDates*sizeof(Date) + (AllDates * 36) + 1]; // chars + [] + komma - 1 komma + die anf�hrungszeichen + {}
+	char *DateToken = new char[201];
+	int AllDates = RowsInFile(f, 0, 201);
+	char* out = new char[AllDates*sizeof(Date) + (AllDates * 36 + 9) + 2 + (AllDates * 201)];
+	/*
+	* Character im Struct * anzahl Struct-Objekte
+	* - "Key":"<doesnt count>",  - jedes Zeichen außer dem in der <>, die neun sind neu wegen der ID
+	* {} ist auch da wenn es keinen einzigen eintrag gibt
+	* ID * Anzahl Termine
+	*/
+
 	strcpy(out, "[");
 	fseek(f, 0, SEEK_SET);
-	fread(Datename, sizeof(char), 51, f);
+	fread(DateToken, sizeof(char), 201, f);
+	int succ;
 	while (!feof(f))
 	{
-		//cout << "Dateiname gefunden: " << Datename << endl;
-		getDate(Datename, out);
-		fread(Datename, sizeof(char), 51, f);
-		if (!feof(f)){
+	//	//cout << "Dateiname gefunden: " << Datename << endl;
+		succ = getDate(DateToken, out);
+		fread(DateToken, sizeof(char), 201, f);
+		if (!feof(f) && succ != -1){
 			strcat(out, ",");
 		}
-
 	}
+	fclose(f);
 	strcat(out, "]");
 	*outPut = out;
 	//cout << "FirstPointer: " << endl << out << endl;
