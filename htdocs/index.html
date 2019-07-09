@@ -1,0 +1,154 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="styles2.css">
+    <title>Care less</title>
+</head>
+<body>
+    <div class="wrapper">
+        <section class="Landing">
+        <div class="headlines">
+            <h1 class="headline1">
+                Care Less.
+            </h1>
+            <h2 class="headline2">
+                 Schedule your day.
+            </h2>
+        </div>
+        <div class="btn">
+            <div class="siz btnone"><a href="#login">Login</a></div>
+        </div>
+        </section>
+        <section class="welcome-login">
+             <div class="login-section" id="login">
+                 <h2 class="headline2">
+                     Login.
+                 </h2>
+                 <div class="login" id="login">
+                       <div class="inputs">
+                          <input type="text" name="name" id="UsernameEnter" placeholder="Your name goes in here.">
+                          <label for="name">Your awesome Name</label>
+
+                          <input type="password" name="password" id="PasswordEnter" placeholder="Psst, keep it secret.">
+                          <label for="password">Password</label>
+                       </div>
+                   
+                        <div class="siz btn-login">
+                          <button onclick="ServermakeToken()" class="btn1">Login</button>
+                          <a href="#popup"></a><button onclick="CreateUser()" class="btn2">Register</button></a>
+                       </div>
+                 </div>
+             </div>
+             <div class="composition">
+                    <img src="img/photo1.jpg" alt="Mach ich Foto tu ich Facebook" class="composition__photo composition__photo--p1">
+                    <img src="img/photo2.jpg" alt="Mach ich Foto tu ich Facebook" class="composition__photo composition__photo--p2">
+                    <img src="img/photo3.jpg" alt="Mach ich Foto tu ich Facebook" class="composition__photo composition__photo--p3">
+             </div>
+        </section>
+    </div>
+
+<!-- HIER WERDEN DIE TERMINE ANGEZEIGT -->
+
+    <div class="popup" id="popup">
+            <div class="popup__content">
+                <div class="termin-anlegen">
+                        <div class="inputs">
+                                <input type="text" id="Desc" name="KP">
+                                <label for="KP">DESC</label>
+                                <input type="text" id="Time" name="Time">
+                                <label for="Time">Time</label>
+                                <input type="text" id="DateName" name="Date">
+                                <label for="Date">Date</label>
+                                <div class="button">
+                                    <button id="CreateDate" onclick="CreateDate()">Erstelle Termin</button>
+                                </div>
+                            </div>
+                        <div class="userverwaltung">
+                         <div class="button">
+                             <button id="ausloggen" onclick="Logout()">Logout</button>
+                             <button id="Change PW" onclick="ChangePW()">Passwort </br> ändern</button>
+                         </div>
+                        </div>
+                        </div>
+                        
+
+                <div class="termin-anzeigen">
+                        <div class="displayDates">
+                            <!-- EIN EINZELLNER TERMIN -->
+                                <!-- <div class="content">
+                                    <p class="title">
+                                        Überschrift
+                                    </p>
+                                    <p class="desc">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                        Quos nesciunt doloremque consectetur debitis quam dignissimos cupiditate quidem aliquid alias! 
+                                        Id culpa animi aliquid! Optio soluta nesciunt consectetur aliquam dolor provident?
+                                    </p>
+                                    <p class="Datum">11.1.2019</p>
+                                    <svg class="svgs bin">
+                                            <use xlink:href="img/sprite.svg#icon-bin"></use>
+                                        </svg>
+                                </div>
+                                <div class="content">
+                                    <p class="title">
+                                        Überschrift
+                                    </p>
+                                    <p class="desc">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                        Quos nesciunt doloremque consectetur debitis quam dignissimos cupiditate quidem aliquid alias! 
+                                        Id culpa animi aliquid! Optio soluta nesciunt consectetur aliquam dolor provident?
+                                    </p>
+                                    <p class="Datum">11.1.2019</p>
+                
+                                </div>
+                                <div class="content">
+                                    <p class="title">
+                                        Überschrift
+                                    </p>
+                                    <p class="desc">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                        Quos nesciunt doloremque consectetur debitis quam dignissimos cupiditate quidem aliquid alias! 
+                                        Id culpa animi aliquid! Optio soluta nesciunt consectetur aliquam dolor provident?
+                                    </p>
+                                    <p class="Datum">11.1.2019</p>
+                
+                                </div>
+                                <div class="content">
+                                    <p class="title">
+                                        Überschrift
+                                    </p>
+                                    <p class="desc">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                        Quos nesciunt doloremque consectetur debitis quam dignissimos cupiditate quidem aliquid alias! 
+                                        Id culpa animi aliquid! Optio soluta nesciunt consectetur aliquam dolor provident?
+                                    </p>
+                                    <p class="Datum">11.1.2019</p>
+                
+                                </div>
+                                <div class="content">
+                                    <p class="title">
+                                        Überschrift
+                                    </p>
+                                    <p class="desc">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                        Quos nesciunt doloremque consectetur debitis quam dignissimos cupiditate quidem aliquid alias! 
+                                        Id culpa animi aliquid! Optio soluta nesciunt consectetur aliquam dolor provident?
+                                    </p>
+                                    <p class="Datum">11.1.2019</p>
+                
+                                </div> -->
+                            </div>
+                            
+            </div>
+            </div>
+            <a href="#" class="popup__close">Close</a>
+        </div>
+<script src="JS/jquery.js"></script>
+<script src="JS/main.js"></script>
+</body>
+</html>

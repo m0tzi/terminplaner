@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login | Terminplaner</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="window">
+        <div class="headlines">
+            <h1 class="headline1">
+                Login
+            </h1>
+        </div>
+        <div class="inputs">
+            <label for="name">Your awesome Name</label>
+            <input type="text" name="name" id="UsernameEnter" placeholder="Your name goes in here.">
+
+            <label for="password">Password</label>
+            <input type="text" name="password" id="PasswordEnter" placeholder="Psst, keep it secret.">
+        </div>
+
+        <div class="btn">
+            <button onclick="GetToken()" class="btn1">Login</button>
+            <button onclick="CreateUser()" class="btn2">Register</button>
+        </div>
+    </div>
+    </div>
+
+
+
+    <!-- SCRIPT CHRIS -->
+    <script>
+            var Token;
+            var Endpoint = "http://localhost/cgi-bin/Test.exe";
+    
+            function CallServer(parameter) {
+                var Prom = jQuery.Deferred();
+                $.ajax({
+                    url: Endpoint,
+                    method: "Post",
+                    data: parameter
+                }).done(function(data) {
+                    console.log("ERFOLG");
+                    console.log(data);
+                    Prom.resolve(data);
+                }).fail(function(data) {
+                    console.log("Misserfolg");
+                    console.log(data);
+                    Prom.reject();
+                });
+                return Prom.promise();
+            }
+    
+            function CreateDate() {
+                var parameter = {
+                    "Token": Token,
+                    "Desc": $("#Desc").val(),
+                    "Time": $("#Time").val(),
+                    "DateName": $("#DateName").val(),
+                    "Befehl": "CreateDate"
+                }
+                CallServer(parameter);
+            }
+    
+            function GetDates() {
+                console.log(Token);
+                var parameter = {
+                    "Token": Token,
+                    "Befehl": "GetDates"
+                }
+                CallServer(parameter);
+            }
+    
+            function CreateUser() {
+                var parameter = {
+                    "Username": $("#UsernameEnter").val(),
+                    "Password": $("#PasswordEnter").val(),
+                    "Befehl": "CreateUser"
+                }
+                $.when(CallServer(parameter)).done(function(data) {
+                    Token = data.Server;
+                    createDashboard();
+                });
+            }
+    
+            function GetToken() {
+                var parameter = {
+                    "Username": $("#UsernameEnter").val(),
+                    "Password": $("#PasswordEnter").val(),
+                    "Befehl": "GetToken"
+                }
+                $.when(CallServer(parameter)).done(function(data) {
+                    Token = data.Server;
+                    createDashboard();
+                });
+            }
+    
+            async function createDashboard() {
+                $.when(GetDates()).done(function() {
+    
+                });
+                $(".CenterMe").addClass("hide");
+                $(".Dashboard").removeClass("hide");
+            }
+            $(document).ready(function() {
+                //WIP
+            })
+        </script>
+</body>
+</html>

@@ -1,0 +1,377 @@
+@keyframes obenunten{
+    0%{
+        opacity:0;
+        transform: translateY(-50%);
+    }
+
+    100%{
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+@keyframes linksrechts{
+    0%{
+        opacity: 0;
+        transform: translateX(-50%);
+    }
+
+    80%{
+        opacity: 1;
+        transform: translateX(2%);
+    }
+
+    100%{
+        transform: translate(0);
+    }
+}
+
+@keyframes untenoben{
+    0%{
+        opacity: 0;
+        transform: translateY(50%);
+    }
+
+    100%{
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+*{
+     /* some vars */
+
+    --color-first: rgb(234, 89, 128);
+    --color-second: orangered;
+    --color-third: rgb(89, 245, 245);
+    --color-black: black;
+    --color-white: white;
+    --shadows: 2px 3px
+
+    margin: 0;
+    padding: 0;
+
+    /* Ergibt bei einem Standartbrowser 10px dadurch präzise rems */
+    font-size: 62.5%;
+    font-family: sans-serif;
+
+    box-sizing: border-box;
+}
+
+body{
+    padding: 2rem;
+}
+
+a{
+    text-decoration: none;
+    color: inherit;
+    font-size: inherit;
+}
+
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+ 
+}
+
+.Landing{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+ 
+
+    background-image: 
+    /* Doesn't work for some Reason */
+    /*linear-gradient(45deg, 
+    rgba(36, 180, 160, .8) 
+    rgba(36, 180, 160, .3));*/
+    url(img/rolands-varsbergs-miKmVyq3qhE-unsplash.jpg); 
+    
+    background-size:cover;
+    background-position: bottom;
+
+    clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%);
+    
+    height: 98vh;
+
+}
+
+.headlines{
+    color: white;
+    font-family: sans-serif;
+
+}
+
+.headline1{
+    font-size: 15rem;
+
+    animation: obenunten 2s;
+    animation-delay: .5s;
+    animation-fill-mode: forwards;
+}
+
+.headline2{
+    margin-top: -15rem;
+
+    font-size: 8.3rem;
+
+    animation: linksrechts 2s;
+    animation-delay: .5s;
+    animation-fill-mode: forwards;
+}
+
+.btn{
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+
+
+margin-top: -4rem;
+
+color: white;
+opacity: 0;
+
+animation: untenoben 2s;
+animation-delay: 1s;
+animation-fill-mode: forwards;
+
+}
+
+.btnone{
+    border: 4px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btnone:hover{
+    background-color: rgba(0, 180, 180, .8);
+    color: #FFF;
+}
+
+.siz{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+
+    font-size: 2.5rem;
+
+    width: 30rem;
+    height: 5rem;
+
+    margin-top: 3rem;
+}
+
+
+
+
+/* LOGIN SECTION */
+
+
+.login-section{
+    height: 90rem;
+    width: 50vw;
+    background-color: var(--color-white);
+
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+
+    transition: all .2s;
+
+
+    font-size: 5rem;
+}
+
+input{
+    border: none;
+    border-bottom: 2px solid black;
+    margin-top: 4rem;
+}
+
+input:active,
+input:focus{
+    border: none;
+    border-bottom: 2px solid black;
+}
+
+
+label{
+    margin-top: .5rem;
+}
+
+button{
+    border: 1px solid black;
+    color: black;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    display: inline-block;
+    font-size: 1.6rem;
+}
+
+.welcome-login{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+.inputs{
+    display: flex;
+    flex-direction: column;
+}
+
+
+.btn-login{
+}
+
+.composition{
+    display: flex;
+    align-content: center;
+    align-items: center;
+    position: relative;
+    width: 50vw;
+}
+
+.composition__photo{
+    max-width: 25rem;
+    box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.4);
+    border-radius: .2rem;
+    z-index: 10;
+    transition: all .2s;
+    outline-offset: 2rem;
+    position: absolute;
+    margin-left: 6rem;
+}
+
+.composition__photo--p1{
+    left: 2rem;
+    top: 40%;
+}
+.composition__photo--p2{
+    left: 10rem;
+    top: 25%;
+}
+.composition__photo--p3{
+    left: 6rem;
+    top: 30%;
+}
+
+.composition__photo:hover {
+    outline: 1rem solid rgb(0, 180, 180);
+    transform: scale(1.05) translateY(-0.5rem);
+    box-shadow: 0 2.5rem 4rem rgba(0, 0, 0, 0.5);
+    z-index: 20; }
+
+.popup {
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .3s; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+    
+.popup__content {
+    width: 75%;
+    height: 60rem;
+    background-color: #fff;
+    box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    overflow: hidden;
+    opacity: 0;
+    transition: all .5s .2s; 
+
+    display: flex;
+    justify-content: center;
+
+}
+
+.popup:target {
+    opacity: 1;
+    visibility: visible; }
+.popup:target .popup__content {
+    opacity: 1;
+}
+.popup__close:link, .popup__close:visited {
+    color: #777;
+    font-size: 3rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: all .2s;
+ }
+.popup__close:hover {
+    color: rgb(0, 180, 180); 
+}
+
+.termin-anzeigen{
+    width: 50%;
+    display: flex;
+    justify-content: start;
+    align-items: flex-start;
+
+    font-size: 4rem;
+
+    overflow: auto;
+
+}
+
+.title{
+    font-size: 2rem;
+
+    margin: 1rem 0;
+}
+.content{
+    border: 1px solid black;
+    margin: 1rem;
+    padding: .5rem;
+}
+
+.svgs{
+    width: .6rem;
+    fill: #000;
+}
+
+.bin{
+
+}
+
+.pen{
+
+}
+
+
+.termin-anlegen{
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgba(0, 180, 180, .3);
+}
+
+.userverwaltung{
+    height: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: antiquewhite;
+}
